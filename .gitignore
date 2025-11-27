@@ -1,0 +1,13 @@
+# Build output
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.out
+*.toc
+*.gz
+*.xml
