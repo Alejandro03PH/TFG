@@ -4,8 +4,8 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader
 
 def carregador_dades(csv_path: str,
-                batch_size_train: int = 24,
-                batch_size_test: int  = 48,
+                batch_size_train: int = 32,
+                batch_size_test: int  = 64,
                 train_ratio: float    = 0.8,
                 shuffle_train: bool   = True):
     # ----------------------------------------------------------
