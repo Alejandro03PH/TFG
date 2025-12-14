@@ -4,8 +4,8 @@ if nargin < 2, N = 250; end
 
 % 1. Generem punts aleatoris
 
-xp = -50 + 100*rand(N,1);   % entre -50 i 50
-yp = -35 + 70*rand(N,1);    % entre -35 i 35
+xp = -38 + 76*rand(N,1);   % entre -38 i 38
+yp = -22 + 44*rand(N,1);    % entre -22 i 22
 
 % 2. Mirem si estan dintre o fora del poligon
 
