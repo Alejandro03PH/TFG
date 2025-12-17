@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
 import Dades   # Importem el mòdul Dades on tenim el DataLoader definit
 
@@ -18,8 +17,6 @@ class Classificador(nn.Module):
             nn.ReLU(),                  # Funció d'activació ReLU
             nn.Linear(n_oculta, n_oculta),   # Capa oculta → Capa oculta
             nn.ReLU(),                  # Funció d'activació ReLU
-            nn.Linear(n_oculta, n_oculta),   # Capa oculta → Capa oculta
-            nn.ReLU(),                  # Funció d'activació ReLU
             nn.Linear(n_oculta, n_sortida),   # Capa oculta → logit
             nn.Sigmoid()                # Converteix el logit a una probabilitat entre 0 i 1
         )
@@ -32,14 +29,13 @@ class Classificador(nn.Module):
 # ---------- Funció de pèrdua i optimitzador i càrrega de dades ----------
 
 model = Classificador()   # Creem una instància del model
-# model.load_state_dict(torch.load('Pesos_classificador.pth')) # Carreguem els pesos inicials del model des d'un fitxer. Això és útil si volem continuar l'entrenament d'un model ja entrenat anteriorment. Si és la primera vegada que entrenem el model, podem comentar aquesta línia.
 epochs = 200     # Nombre d'èpoques
 lr = 1e-4 # Taxa d'aprenentatge
-weight_decay = 1e-5 # Decaïment de pesos
+weight_decay = 1e-4 # Decaïment de pesos
 criteri = nn.BCELoss()                     # Funció de pèrdua: Binary Cross Entropy Loss
 optimizador = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)  # Optimitzador: Adam       
 train_loader, val_loader, test_loader = Dades.carregador_dades("Xarxa neuronal/dades.csv") # Carreguem les dades utilitzant la funció del mòdul Dades    
-checkpoint_path=('Pesos_classificador.pth')  # Ruta per desar el punt de control
+checkpoint_path=('Xarxa neuronal/Pesos_classificador.pth')  # Ruta per desar el punt de control
 start_epoch=1  # Època inicial
 
 # Si existeix un punt de control, carreguem l'estat del model i de l'optimitzador
@@ -54,7 +50,7 @@ except FileNotFoundError:
 
 
 best_val = float('inf')
-patience, wait = 20, 0
+patience, wait = 30, 0
 
 # ---------- Entrenament ---------- (Aqui entrenem el model utilitzant les dades d'entrenament carregades anteriorment, i actualitzem els pesos del model utilitzant l'optimitzador definit.)
 
@@ -76,9 +72,9 @@ for epoch in range(start_epoch, start_epoch + epochs): # Per cada època
             for xb, yb in val_loader:
                 preds = model(xb).squeeze()
                 val_loss += criteri(preds, yb.squeeze()).item() * xb.size(0)
-        val_loss /= len(val_loader.dataset)
+        val_loss /= len(val_loader.dataset) # type: ignore
 
-        print(f'Epoch {epoch:02d} – train loss: {loss.item():.4f} – val loss: {val_loss:.4f}')
+        print(f'Epoch {epoch:02d} – train loss: {loss.item():.4f} – val loss: {val_loss:.4f}') # type: ignore
 
         # early stopping
         if val_loss < best_val:
@@ -90,12 +86,12 @@ for epoch in range(start_epoch, start_epoch + epochs): # Per cada època
                 print('Early stopping')
                 break
     else:
-        print(f'Epoch {epoch:02d} – loss: {loss.item():.4f}')
+        print(f'Epoch {epoch:02d} – loss: {loss.item():.4f}') # type: ignore
     
 
  # ---------- Test ---------- (Aqui avaluem el model utilitzant les dades de prova carregades anteriorment, i calculem la pèrdua i l'exactitud del model. Aquesta part no actualitza els pesos del model, només calcula la pèrdua i l'exactitud perquè poguem veure com avança l'entrenament de la nostra IA.)
 
-model.eval()
+model.eval() # Posem el model en mode avaluació
 correct = 0
 test_loss = 0.0
 with torch.no_grad():
@@ -113,8 +109,8 @@ with torch.no_grad():
 # ---------- Guardem els pesos obtinguts un cop finalitzem l'entrenament ----------
 
 torch.save({
-        'epoch': epoch,                     # Guardem l'època actual
+        'epoch': epoch,                     # Guardem l'època actual # type: ignore
         'model_state': model.state_dict(),
         'optimizer_state': optimizador.state_dict(),
-        'loss': loss.item()
+        'loss': loss.item() # type: ignore
     }, checkpoint_path)
