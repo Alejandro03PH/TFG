@@ -4,13 +4,19 @@ import torch.optim as optim
 import Dades   # Importem el mòdul Dades on tenim el DataLoader definit
 
 
+# Definim una funció que substitueixi a la funció print per afegir timestamps als missatges de log i guardar-los en un fitxer
+def log_print(message):
+    with open('Xarxa neuronal/entrenament_log.txt', 'a') as f:
+        f.write(f'{message}\n')
+    print(f'{message}')
+
 # ---------- Definició del model ----------
 
 # Definim la classe del model de xarxa neuronal. Aqui definirem el model que utilitzarem per fer el classificador. 
 # Més endavant, utilitzarem aquesta classe per crear dos instàncies del model, una per l'entrenament i una altra per la validació.
 
 class Classificador(nn.Module):
-    def __init__(self, n_entrada = 2, n_sortida = 1, n_oculta = 32): # Configurem les neurones d'entrada, sortida i ocultes.
+    def __init__(self, n_entrada = 2, n_sortida = 1, n_oculta = 6): # Configurem les neurones d'entrada, sortida i ocultes.
         super().__init__() 
         self.net = nn.Sequential( # Definim la xarxa neuronal com una seqüència de capes.
             nn.Linear(n_entrada, n_oculta),   # Entrada → Capa oculta
@@ -44,8 +50,9 @@ try:
     model.load_state_dict(ckpt['model_state'])
     optimizador.load_state_dict(ckpt['optimizer_state'])
     start_epoch = ckpt['epoch'] + 1
-    print(f'Resuming from epoch {start_epoch}')
+    log_print(f'Resumint l\'entrenament des de l\'època {start_epoch}\nTaxa d\'aprenentatge: {lr}\nDecaïment de pesos: {weight_decay}')
 except FileNotFoundError:
+    log_print(f'Començant entrenament de la xarxa.\nNeurones d\'entrada: 2\nNeurones de capes ocultes: 6\nCapes ocultes: 2\nNeurones de sortida: 1\nTaxa d\'aprenentatge: {lr}\nDecaïment de pesos: {weight_decay}\nFunció de pèrdua: Binary Cross Entropy Loss\nOptimitzador: Adam\nÈpoques: {epochs}')
     pass
 
 
@@ -74,7 +81,7 @@ for epoch in range(start_epoch, start_epoch + epochs): # Per cada època
                 val_loss += criteri(preds, yb.squeeze()).item() * xb.size(0)
         val_loss /= len(val_loader.dataset) # type: ignore
 
-        print(f'Epoch {epoch:02d} – train loss: {loss.item():.4f} – val loss: {val_loss:.4f}') # type: ignore
+        log_print(f'Època {epoch:02d} – train loss: {loss.item():.4f} – val loss: {val_loss:.4f}') # type: ignore
 
         # early stopping
         if val_loss < best_val:
@@ -83,10 +90,10 @@ for epoch in range(start_epoch, start_epoch + epochs): # Per cada època
         else:
             wait += 1
             if wait >= patience:
-                print('Early stopping')
+                log_print('Early stopping activat.')
                 break
     else:
-        print(f'Epoch {epoch:02d} – loss: {loss.item():.4f}') # type: ignore
+        log_print(f'Època {epoch:02d} – loss: {loss.item():.4f}') # type: ignore
     
 
  # ---------- Test ---------- (Aqui avaluem el model utilitzant les dades de prova carregades anteriorment, i calculem la pèrdua i l'exactitud del model. Aquesta part no actualitza els pesos del model, només calcula la pèrdua i l'exactitud perquè poguem veure com avança l'entrenament de la nostra IA.)
@@ -103,8 +110,8 @@ with torch.no_grad():
         correct += (predicted == yb.squeeze()).sum().item()
 
     test_loss /= len(test_loader.dataset) # type: ignore
-    accuracy = correct / len(test_loader.dataset) # type: ignore
-    print(f'Test Loss: {test_loss:.4f}, Accuracy: {accuracy:.4f}')
+    accuracy = round(correct / len(test_loader.dataset) * 100,2) # type: ignore
+    log_print(f'Test Loss: {test_loss:.4f}, Percentatje d\'encert: {accuracy:.4f}%')
 
 # ---------- Guardem els pesos obtinguts un cop finalitzem l'entrenament ----------
 

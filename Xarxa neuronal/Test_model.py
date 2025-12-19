@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 
 class Classificador(nn.Module):
-    def __init__(self, n_entrada = 2, n_sortida = 1, n_oculta = 32): # Configurem les neurones d'entrada, sortida i ocultes.
+    def __init__(self, n_entrada = 2, n_sortida = 1, n_oculta = 8): # Configurem les neurones d'entrada, sortida i ocultes.
         super().__init__() 
         self.net = nn.Sequential( # Definim la xarxa neuronal com una seqüència de capes.
             nn.Linear(n_entrada, n_oculta),   # Entrada → Capa oculta
@@ -27,9 +27,9 @@ model.load_state_dict(ckpt['model_state'])
 model.eval()  # Posem el model en mode avaluació
 
 
-# ----------------------------------------------------------------------
-# Definim la funció de predicció per a un punt donat
-# ----------------------------------------------------------------------
+
+# --------- Definim la funció de predicció per a un punt donat ---------
+
 def prediccio(model, punt):
     tensor = torch.tensor(punt, dtype=torch.float32).unsqueeze(0)  # [1, 2]
     with torch.no_grad():
@@ -38,9 +38,9 @@ def prediccio(model, punt):
     return prob, label
 
 
-# ----------------------------------------------------------------------
-# Loop interactiu per a prediccions
-# ----------------------------------------------------------------------
+
+# --------- Loop interactiu per a prediccions ---------
+
 if __name__ == '__main__':
     net = model
 
