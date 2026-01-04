@@ -18,7 +18,12 @@ def carregador_dades(csv_path: str,
     # ----------------------------------------------------------
     # Posem les dades en el format correcte y les convertim a tensors de PyTorch
     # ----------------------------------------------------------
-    X = torch.tensor(df[['x', 'y']].values, dtype=torch.float32)   # (N,2)
+    coords = df[['x', 'y']].values.astype('float32')
+
+    coords[:, 0] = (coords[:, 0] + 40.0) / 80.0   # x ∈ [-40,40] → [0,1]
+    coords[:, 1] = (coords[:, 1] + 20.0) / 40.0   # y ∈ [-20,20] → [0,1]
+
+    X = torch.tensor(coords, dtype=torch.float32)
     Y = torch.tensor(df[['Sortida']].values, dtype=torch.float32) # (N,1)
 
     # ----------------------------------------------------------

@@ -1,24 +1,8 @@
 import torch
-import torch.nn as nn
+from Train_model import Classificador
+import Dades 
 
-class Classificador(nn.Module):
-    def __init__(self, n_entrada = 2, n_sortida = 1, n_oculta = 8): # Configurem les neurones d'entrada, sortida i ocultes.
-        super().__init__() 
-        self.net = nn.Sequential( # Definim la xarxa neuronal com una seqüència de capes.
-            nn.Linear(n_entrada, n_oculta),   # Entrada → Capa oculta
-            nn.ReLU(),                  # Funció d'activació ReLU
-            nn.Linear(n_oculta, n_oculta),   # Capa oculta → Capa oculta
-            nn.ReLU(),                  # Funció d'activació ReLU
-            nn.Linear(n_oculta, n_sortida),   # Capa oculta → logit
-            nn.Sigmoid()                # Converteix el logit a una probabilitat entre 0 i 1
-        )
-
-    # Ara es defineix el pas endavant de la xarxa (Aquest pas correspón a la primera predicció que fa la xarxa abans de calcular l'error)
-
-    def forward(self, x):
-        return self.net(x) 
-    
-
+# --------- Carreguem el model entrenat ---------
 
 checkpoint_path=('Xarxa neuronal/Pesos_classificador.pth')  # Ruta per desar el punt de control
 model = Classificador()   # Creem una instància del model
@@ -31,7 +15,7 @@ model.eval()  # Posem el model en mode avaluació
 # --------- Definim la funció de predicció per a un punt donat ---------
 
 def prediccio(model, punt):
-    tensor = torch.tensor(punt, dtype=torch.float32).unsqueeze(0)  # [1, 2]
+    tensor = torch.tensor(normalize_xy(punt[0], punt[1]), dtype=torch.float32).unsqueeze(0)  # [1, 2]
     with torch.no_grad():
         prob = model(tensor).squeeze().item()
         label = int(prob >= 0.5)
@@ -42,7 +26,23 @@ def prediccio(model, punt):
 # --------- Loop interactiu per a prediccions ---------
 
 if __name__ == '__main__':
-    net = model
+
+    train_loader, val_loader, test_loader = Dades.carregador_dades("Xarxa neuronal/dades.csv") # Carreguem les dades utilitzant la funció del mòdul Dades
+
+    def compute_output_max(model, dataloader):
+        max_val = 0.0
+        with torch.no_grad():
+            for xb, _ in dataloader:
+                out = model(xb)          # shape [batch, 1]
+                batch_max = out.max().item()
+                if batch_max > max_val:
+                    max_val = batch_max
+        return max_val
+    
+    def normalize_xy(x, y):
+        x = (x + 40.0) / 80.0
+        y = (y + 20.0) / 40.0
+        return x, y
 
     while True:
         try:
@@ -51,7 +51,10 @@ if __name__ == '__main__':
             y = input("Punt y: ").strip()
             xf = float(x)
             yf = float(y)
-            prob, label = prediccio(net, (xf, yf))
+            score, label = prediccio(model, (xf, yf))
+            a_max = compute_output_max(model, val_loader)
+            print(f"Valor màxim de sortida a les dades de validació: {a_max:.4f}")
+            prob = score / a_max
 
             print(f"\nPunt: ({xf}, {yf})")
             print(f"Probabilitat d'estar dintre: {prob:.4f}")
