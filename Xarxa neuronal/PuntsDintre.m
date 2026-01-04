@@ -39,7 +39,7 @@ hold off;
 T = array2table(resultat, ...
     'VariableNames', {'x','y','Sortida'});
 
-Nom = 'dades.csv';
+Nom = 'dades2.csv';
 
 writetable(T, Nom);
 

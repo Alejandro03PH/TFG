@@ -63,11 +63,11 @@ class SNN():
         # Extracció de pesos i biaixos de l'MLP per a l'SNN:
         
         # Capa 1
-        self.w1 = mlp_model.net[0].weight.data / a1_max  # Matriu 4x2
-        self.b1 = mlp_model.net[0].bias.data / a1_max    # Vector 4
+        self.w1 = mlp_model.net[0].weight.data / a1_max  # Matriu 6x2
+        self.b1 = mlp_model.net[0].bias.data / a1_max    # Vector 6
         
         # Capa Sortida
-        self.w2 = mlp_model.net[2].weight.data / a2_max  # Matriu 1x4
+        self.w2 = mlp_model.net[2].weight.data / a2_max  # Matriu 1x6
         self.b2 = mlp_model.net[2].bias.data / a2_max    # Vector 1
 
     def __call__(self, x_input):
@@ -80,7 +80,7 @@ class SNN():
         threshold= 1.0     # Llindar sortida
         decay = 0.9         # Leak (mantenim memòria)
 
-        v1 = torch.zeros(4) 
+        v1 = torch.zeros(6) 
         v2 = torch.zeros(1)
     
         dispars_totals = 0
@@ -254,7 +254,7 @@ def compute_output_max(model, dataloader):
     plt.show()"""
 
 if __name__ == '__main__':
-    modelSNN = SNN(model, a1_max, a2_max, passos_temps=2000)
+    modelSNN = SNN(model, a1_max, a2_max, passos_temps=200)
     """while True:
         try:
             # Pregunta a l'usuari per les coordenades del punt
@@ -297,7 +297,7 @@ if __name__ == '__main__':
                 mlp_y.append(y)
             # SNN
             p_snn = prediccio_snn(modelSNN, (x, y))
-            if p_snn >= threshold:
+            if p_snn >= threshold+0.1:
                 snn_x.append(x)
                 snn_y.append(y)
 

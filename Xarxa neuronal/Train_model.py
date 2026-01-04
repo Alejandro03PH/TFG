@@ -9,7 +9,7 @@ import Dades   # Importem el mòdul Dades on tenim el DataLoader definit
 # Més endavant, utilitzarem aquesta classe per crear dos instàncies del model, una per l'entrenament i una altra per la validació.
 
 class Classificador(nn.Module):
-    def __init__(self, n_entrada = 2, n_sortida = 1, n_oculta = 4): # Configurem les neurones d'entrada, sortida i ocultes.
+    def __init__(self, n_entrada = 2, n_sortida = 1, n_oculta = 6): # Configurem les neurones d'entrada, sortida i ocultes.
         super().__init__() 
         self.net = nn.Sequential( # Definim la xarxa neuronal com una seqüència de capes.
             nn.Linear(n_entrada, n_oculta),   # Entrada → Capa oculta
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     model = Classificador()   # Creem una instància del model
     epochs = 200     # Nombre d'èpoques
     lr = 1e-5 # Taxa d'aprenentatge
-    weight_decay = 1e-4 # Decaïment de pesos
+    weight_decay = 1e-5 # Decaïment de pesos
     criteri = nn.MSELoss()                     # Funció de pèrdua: MSELoss (Mean Squared Error Loss)
     optimizador = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)  # Optimitzador: Adam      
     train_loader, val_loader, test_loader = Dades.carregador_dades("Xarxa neuronal/dades.csv") # Carreguem les dades utilitzant la funció del mòdul Dades    
