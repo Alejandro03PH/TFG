@@ -267,7 +267,7 @@ Les CNNs, o xarxes neuronals convolucionals, són xarxes dissenyades especialmen
 	\label{fig:CNN}
 \end{figure}
 
-Les RNNs, o xarxes neuronals recurrents, apareixen també a principis dels anys 1980, a mans de Rumelhart que, juntament amb David McClelland i Geoffrey Hinton, desenvolupa un algoritme de retropropagació a l'any 1986, presentat a l'article \textit{Learning Representations by Back-Propagating Errors} \cite{rumelhart1986learning}. A l'article, Rumelhart introdueix les xarxes neuronals recurrents com una extensió natural de les xarxes neuronals convencionals com l'MLP (Multi Layer Perceptrón), amb l'objectiu de poder tractar dades seqüencials o temporals, és a dir, informació on l'ordre dels elements és rellevant. A diferència de les xarxes tradicionals, on el flux d'informació va en una única direcció, d'una entrada cap a una sortida, les RNNs tenen connexions recurrents que permeten que la sortida d'una neurona en un instant de temps pugui influir en el seu estat en instants posteriors, es a dir, que la sortida de cada neurona no només depèn de la entrada, sinó que també depèn de les entrades ha tingut anteriorment, com es pot veure a la \autoref{fig:RNN}. D'aquesta manera, la xarxa manté una mena de "memòria" interna que li permet emmagatzemar informació del passat i utilitzar-la per processar noves entrades.
+Les RNNs, o xarxes neuronals recurrents, apareixen també a principis dels anys 1980, a mans de Rumelhart que, juntament amb David McClelland i Geoffrey Hinton, desenvolupa un algoritme de retropropagació a l'any 1986, presentat a l'article \textit{Learning Representations by Back-Propagating Errors} \cite{rumelhart1986learning}. A l'article, Rumelhart introdueix les xarxes neuronals recurrents com una extensió natural de les xarxes neuronals convencionals com l'MLP (Multi Layer Perceptrón), amb l'objectiu de poder tractar dades seqüencials o temporals, és a dir, informació on l'ordre dels elements és rellevant. A diferència de les xarxes tradicionals, on el flux d'informació va en una única direcció, d'una entrada cap a una sortida, les RNNs tenen connexions recurrents que permeten que la sortida d'una neurona en un període de temps pugui influir en el seu estat en períodes posteriors, es a dir, que la sortida de cada neurona no només depèn de la entrada, sinó que també depèn de les entrades ha tingut anteriorment, com es pot veure a la \autoref{fig:RNN}. D'aquesta manera, la xarxa manté una mena de "memòria" interna que li permet emmagatzemar informació del passat i utilitzar-la per processar noves entrades.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{RNN.png}
@@ -366,39 +366,122 @@ Aquest model reprodueix amb gran fidelitat fenòmens biològics com el llindar d
 
 \subsection{Model Integrate-and-Fire (IF) i Leaky Integrate-and-Fire (LIF)}
 
-El model Integrate-and-Fire va ser introduït originalment per Louis Lapicque l'any 1907, i posteriorment refinat en la seva variant més utilitzada, el model \textit{Leaky Integrate-and-Fire}. Aquest model és una simplificació extrema del comportament neuronal, però captura els mecanismes essencials necessaris per al càlcul en SNNs.
+El model Integrate-and-Fire va ser introduït originalment per Louis Lapicque l'any 1907 al seu article \textit{Recherches quantitatives sur l'excitation électrique des nerfs traitée comme une polarisation} \cite{lapicque1907}, i posteriorment refinat per Stein en el seu article \textit{A theoretical analysis of neuronal variability} \cite{stein1965} en la seva variant més utilitzada, el model \textit{Leaky Integrate-and-Fire}. Aquest model de neurona és una simplificació extrema del comportament neuronal, però captura els mecanismes essencials necessaris per al càlcul en SNNs.
 
-A nivell elèctric, la neurona LIF es modela com un condensador que integra el corrent d'entrada, amb una resistència en paral·lel que provoca una pèrdua gradual del potencial (leak). El potencial de membrana $V(t)$ evoluciona segons l'equació:
+A nivell elèctric, la neurona Integrate-and-Fire (IF) es pot modelar com un sistema que integra el corrent d’entrada al llarg del temps i genera un pols discret quan el potencial acumulat supera un determinat llindar. El corrent d’entrada $I(t)$ pot provenir d’una font externa, en el cas d’una neurona d’entrada de la xarxa, o bé correspondre a la suma ponderada dels polsos generats per les neurones de la capa anterior. Addicionalment, el model pot incorporar un terme de biaix, representable com una font de corrent constant $I_b$, que permet desplaçar el punt de funcionament de la neurona.
+
+Aquest corrent s’integra mitjançant un condensador, de manera que la tensió associada al potencial de membrana augmenta proporcionalment a la càrrega acumulada. El valor de tensió resultant es compara amb una referència mitjançant un amplificador operacional actuant com a comparador, que defineix el llindar de d'actuació $V_{ref}$. Quan la tensió supera aquesta referència, el comparador genera el pols de sortida i s’aplica un mecanisme de reinici del potencial. El esquema elèctric conceptual d’una neurona IF es mostra a la \autoref{fig:if_circuit}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{if_circuit.png}
+	\caption{Esquema elèctric conceptual d’una neurona Integrate-and-Fire (IF).}
+	\label{fig:if_circuit}
+\end{figure}
+
+Des d’un punt de vista matemàtic, la dinàmica del potencial de membrana $V(t)$ en el model IF ve descrita per:
 
 \begin{equation}
-	\tau_m \frac{dV}{dt} = -(V - V_{rest}) + R I(t)
+	C \frac{dV}{dt} = I(t) + I_b
 \end{equation}
 
-on $\tau_m = RC$ és la constant de temps de la membrana, $V_{rest}$ el potencial de repòs, $R$ la resistència equivalent i $I(t)$ el corrent d'entrada, que habitualment representa la suma ponderada dels polsos entrants d'altres neurones.
+on $C$ és la capacitat equivalent, $I(t)$ representa el corrent d’entrada i $I_b$ el terme de biaix, si s’utilitza. En absència d’entrada neta, el potencial es manté constant, ja que el model no incorpora cap mecanisme de descàrrega.
 
-Quan el potencial de membrana supera un llindar $V_{th}$, la neurona emet un pols (\textit{spike}) i el potencial es reinicia a un valor $V_{reset}$, entrant sovint en un període refractari durant el qual no pot tornar a disparar. Matemàticament, aquest comportament es defineix com:
+Quan el potencial de membrana assoleix el llindar $V_{ref}$, la neurona emet un pols (\textit{spike}) i el potencial es reinicia a un valor $V_{reset}$:
 
 \[
-	\text{si } V(t) \ge V_{th} \Rightarrow
+	\text{si } V(t) \ge V_{ref} \Rightarrow
 	\begin{cases}
 		\text{emet spike} \\
 		V(t) \leftarrow V_{reset}
 	\end{cases}
 \]
 
-Aquest mecanisme introdueix una no-linealitat temporal inherent i converteix la sortida de la neurona en una seqüència discreta d'esdeveniments temporals, en lloc d'un valor continu. Aquesta característica és clau en les SNNs, ja que la informació es codifica tant en la presència del pols com en el seu instant d'emissió.
+A la \autoref{fig:if_waveform} es pot observar una representació temporal del potencial de membrana i dels polsos generats per una neurona IF en resposta a un corrent d’entrada.
 
-Gràcies a la seva simplicitat matemàtica, estabilitat numèrica i eficiència computacional, el model LIF és el més utilitzat en simulacions de SNNs i en implementacions sobre hardware neuromòrfic.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{if_waveform.png}
+	\caption{Evolució temporal del potencial de membrana $V(t)$ en una neurona IF i generació de spikes en superar el llindar $V_{ref}$.}
+	\label{fig:if_waveform}
+\end{figure}
 
-% Figura suggerida:
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=0.65\textwidth]{lif_model.png}
-%   \caption{Evolució temporal del potencial de membrana en una neurona Leaky Integrate-and-Fire.}
-%   \label{fig:lif}
-% \end{figure}
+Aquest mecanisme introdueix una no-linealitat temporal i converteix la sortida de la neurona en una seqüència discreta d’esdeveniments temporals. No obstant això, el model IF presenta una limitació rellevant. Qualsevol corrent positiu sostingut, encara que sigui molt petit, acaba provocant un dispar, ja que la integració és indefinida en el temps.
 
-Aquests dos models representen els extrems del compromís entre fidelitat biològica i eficiència computacional. Mentre que el model de Hodgkin--Huxley proporciona una descripció detallada del comportament electrofisiològic real de la neurona, el model LIF ofereix una abstracció adequada per a la construcció de xarxes neuronals de polsos escalables i eficients, sent aquest últim el pilar fonamental de la majoria de SNNs modernes.
+Per corregir aquest comportament, Stein introdueix la neurona Leaky Integrate-and-Fire (LIF), que amplia el model IF afegint un mecanisme de pèrdua del potencial de membrana. A nivell elèctric, aquesta extensió es correspon amb la incorporació d’una resistència en paral·lel amb el condensador, que modela les pèrdues naturals de la membrana i força el potencial a relaxar-se cap a un valor de repòs $V_{rest}$. El esquema elèctric conceptual d’una neurona LIF es mostra a la \autoref{fig:lif_circuit}.
+
+\begin{figure}[H]
+	\centering
+	\caption{Esquema elèctric conceptual d’una neurona Leaky Integrate-and-Fire (LIF).}
+	\label{fig:lif_circuit}
+\end{figure}
+
+La dinàmica del potencial de membrana en el model LIF es descriu mitjançant:
+
+\begin{equation}
+	\tau_m \frac{dV}{dt} = -(V - V_{reset}) + R(I(t) + I_b)
+\end{equation}
+
+on $\tau_m = RC$ és la constant de temps de la membrana i $R$ la resistència equivalent. A diferència del model IF, en absència d’entrada el potencial decau exponencialment cap a $V_{reset}$, evitant la integració il·limitada.
+
+De manera anàloga al cas IF, una representació temporal del potencial de membrana i dels spikes associats, com la mostrada a la \autoref{fig:lif_waveform}, resulta especialment útil per evidenciar l’efecte de la fuita i la relaxació del potencial entre entrades consecutives.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{lif_waveform.png}
+	\caption{Evolució temporal del potencial de membrana $V(t)$ en una neurona LIF, mostrant l’efecte de la fuita i la generació de spikes. Font: \cite{lee2020spikebased}}
+	\label{fig:lif_waveform}
+\end{figure}
+
+Aquesta extensió aporta una millor estabilitat temporal, una major robustesa davant soroll i un comportament més proper al de les neurones biològiques, tot mantenint una elevada eficiència computacional. Per aquest motiu, el model LIF s'utilitza de manera majoritària en la simulació de xarxes neuronals espigades i en implementacions sobre hardware neuromòrfic.
+\newpage
+%----------------------------------------------------------------------------------------
+
+\subsection{Codificació i entrenament en xarxes neuronals de polsos}
+
+En les SNNs, la informació no es representa principalment mitjançant valors continus, sinó a través de seqüències de polsos discrets en el temps, anomenats spikes. Això implica que tant les entrades com les sortides del sistema han de ser codificades temporalment, i que la dinàmica interna de la xarxa depèn de la interacció entre aquests polsos i la memòria temporal de les neurones. La manera com es realitza aquesta codificació és un element fonamental en el disseny d’una SNN i condiciona tant el comportament dinàmic com l’estratègia d’entrenament.
+
+Un dels primers aspectes clau en les SNNs és la codificació de la informació. La codificació defineix com un senyal, ja sigui continu o discret, es transforma en un tren de polsos que pot ser processat per la xarxa. Una de les estratègies més simples i utilitzades és la codificació per taxa (rate coding), en la qual la informació es representa mitjançant la freqüència de dispar d’una neurona al llarg d’un tram de temps. En aquest esquema, un valor elevat es correspon amb una taxa de dispar alta, mentre que un valor baix genera pocs o cap pols. Aquest tipus de codificació té una interpretació intuïtiva i és robust davant el soroll, ja que petites variacions en el temps dels polsos no afecten significativament la taxa mitjana. No obstant això, el rate coding sol requerir trams relativament llargs per obtenir una estimació fiable de la taxa, fet que pot incrementar la latència i el cost computacional.
+En la pràctica, la codificació per taxa es sol implementar generant trens de polsos segons un procés estocàstic, habitualment de tipus Poisson, on la probabilitat d’emetre un spike en un interval de temps discret és proporcional al valor de l’entrada normalitzada. Aquest enfocament presenta l’avantatge de ser senzill d’implementar i relativament tolerant al soroll, però requereix finestres temporals prou llargues perquè la taxa d'actuació estimada sigui representativa del valor original. Malgrat aquesta limitació, el rate encoding resulta especialment adequat en escenaris de conversió de pesos ANN-SNN, ja que preserva la semàntica de les activacions mitjanes del model original.
+
+Una altra estratègia de codificació són les codificacions temporals, que aprofiten de manera més directa el temps d’ocurrència dels polsos. En aquests esquemes, la informació no es codifica en el nombre total de spikes, sinó en els instants exactes en què aquests es produeixen o en les relacions temporals entre diferents neurones. Un exemple representatiu és la codificació \textit{time-to-first-spike}, on el valor d’un estímul es reflecteix en el retard fins al primer pols després d’un instant de referència. Altres variants inclouen la codificació per latència, que consisteix a representar la informació mitjançant el temps relatiu d'actuació respecte a un esdeveniment o estímul concret, la codificació per fase respecte a una oscil·lació global, on els polsos es posicionen dins d’un cicle oscil·latori i la fase en què es produeix l'actuació conté la informació, o la codificació basada en l’ordre d'actuació de diferents neurones, en la qual el patró informatiu ve determinat per la seqüència relativa de dispars, independentment del temps absolut. Aquestes estratègies permeten una representació molt més eficient i ràpida de la informació, sovint amb un nombre reduït de spikes, però són més sensibles al soroll temporal i requereixen una sincronització més acurada dels senyals.
+Les codificacions temporals s’utilitzen principalment en escenaris on la latència i l’eficiència són factors crítics, o quan la naturalesa del senyal ja és inherentment temporal. Són especialment rellevants en el processament sensorial basat en esdeveniments, com ara visió neuromòrfica amb sensors dinàmics de visió (DVS), processament auditiu o sistemes que han de reaccionar en temps real amb un nombre mínim d’operacions. En aquests contextos, el fet de poder prendre decisions basades en els primers spikes permet reduir significativament el temps de resposta i el consum energètic. A més, aquestes codificacions exploten de manera més plena la dinàmica temporal de les neurones, apropant el funcionament del model a certs mecanismes observats en sistemes neuronals biològics. No obstant això, el seu ús acostuma a implicar un disseny més precís de la xarxa i dels mecanismes de sincronització, ja que petites variacions temporals poden afectar de manera significativa la representació de la informació. A la \autoref{fig:rate_temporal_encodings} es pot observar una comparació entre la codificació per taxa i diferents esquemes de codificació temporal, il·lustrant com cada mètode representa la mateixa informació mitjançant diferents patrons de polsos.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{rate_temporal_encodings.png}
+	\caption{Comparació entre codificació per taxa i codificacions temporals. Font: \cite{EncodingsZhao2017}}
+	\label{fig:rate_temporal_encodings}
+\end{figure}
+
+Tot i que la codificació per taxa i les codificacions temporals són les més utilitzades avui dia, existeixen altres esquemes de codificació menys comuns però rellevants en determinats contextos. Un exemple és el \textit{burst coding}, en el qual la informació es representa mitjançant ràfegues de polsos emesos en intervals de temps molt curts. En aquest cas, no només és important la presència del dispar, sinó també el nombre de polsos dins d’una ràfega i la seva separació temporal. Aquest tipus de codificació s’ha utilitzat per modelar fenòmens biològics associats a l’atenció o a la detecció d’estímuls rellevants, i pot aportar una major robustesa davant el soroll en entorns on els estímuls són transitoris.
+
+Un altre esquema alternatiu és la \textit{delta modulation}, on els polsos no codifiquen el valor absolut d’un senyal, sinó els canvis o increments respecte a un estat anterior. En aquest enfocament, un pols s’emet quan la variació del senyal supera un cert llindar, la qual cosa el fa especialment adequat per a senyals amb dinàmiques suaus o per a sistemes orientats a l’eficiència energètica. Aquest tipus de codificació és habitual en sistemes basats en esdeveniments, ja que permet reduir significativament el nombre de spikes generats quan el senyal és estable.
+
+\subsection{Entrenament de xarxes neuronals de polsos}
+
+L’aprenentatge de les SNNs presenta un repte addicional respecte al de les ANN convencionals, ja que la funció de dispar de la neurona és inherentment no deribable, i per tant no es pot emprar el mètode de la retropropagació. Una de les aproximacions més estudiades per abordar aquest problema és l’ús de regles d’aprenentatge locals inspirades en la neurobiologia, com la \textit{Spike-Timing-Dependent Plasticity} (STDP). En l’STDP, els pesos sinàptics s’ajusten en funció de la diferència temporal entre els polsos presinàptics i postsinàptics. Si un pols presinàptic precedeix un pols postsinàptic dins d’una període de temps curt, el pes sinàptic tendeix a augmentar, reforçant una relació causal. En canvi, si l’ordre temporal és invers, el pes es redueix. Aquest tipus d’aprenentatge és completament local, ja que depèn només de la informació disponible a la sinapsi, i permet capturar correlacions temporals sense necessitat d’un senyal d’error global.
+
+Tot i els seus avantatges en termes de plausibilitat biològica i eficiència, l’STDP presenta limitacions importants quan s’aplica a tasques supervisades complexes. Per aquest motiu, s’han desenvolupat extensions com l’STDP modulada per recompensa, en la qual les actualitzacions sinàptiques locals es combinen amb un senyal global que reflecteix l’èxit o el fracàs del comportament de la xarxa. Aquest enfocament permet aplicar les SNNs a escenaris d’aprenentatge per reforç, on la recompensa pot estar retardada en el temps.
+
+En paral·lel, una altra línia d’investigació molt activa es centra en l’adaptació dels mètodes de retropropagació del gradient a les SNNs mitjançant l’ús de gradients substitutius (surrogate gradients). En aquest enfocament, la funció de dispar, que és discontínua, es manté durant la simulació directa de la xarxa, però durant la fase de retropropagació se’n substitueix la derivada per una funció suau artificial. Aquesta aproximació permet aplicar una retropropagació a través del temps, o \textit{backpropagation-through-time}, sobre la dinàmica temporal de la xarxa i entrenar arquitectures profundes de SNN de manera supervisada. Malgrat que aquest mètode sacrifica part de la plausibilitat biològica, ofereix una gran flexibilitat i ha demostrat ser molt eficaç en tasques de classificació, processament de sèries temporals i aprenentatge seqüencial.
+
+L’elecció entre codificació per taxa o codificació temporal, així com entre aprenentatge local basat en STDP o entrenament amb gradients substitutius, depèn fortament del tipus d’aplicació i dels requisits del sistema. Les estratègies basades en taxa solen ser més estables i senzilles, mentre que les codificacions temporals permeten aprofitar millor el potencial de càlcul temporal de les SNNs. De la mateixa manera, els mètodes d’aprenentatge local són especialment adequats per a sistemes distribuïts i implementacions neuromòrfiques, mentre que els mètodes basats en gradients ofereixen una major capacitat d’optimització global en entorns supervisats.
+
+En conjunt, aquests mecanismes de codificació, dinàmica sinàptica i aprenentatge constitueixen els fonaments tècnics de les xarxes neuronals espigades. La combinació adequada d’aquests elements permet adaptar les SNNs a una àmplia varietat d’aplicacions, des del processament sensorial basat en esdeveniments fins a la classificació i el control en temps real, tot aprofitant la dimensió temporal com a part intrínseca del càlcul neuronal.
+
+Una altra estratègia rellevant per a l’entrenament de xarxes neuronals de polsos consisteix a entrenar prèviament una xarxa neuronal artificial convencional i, posteriorment, transferir els pesos i biaixos a una SNN. En aquest enfocament, la ANN s’entrena utilitzant mètodes estàndard de retropropagació i funcions d’activació contínues, com ara la funció ReLU, amb les dades d'entrada i sortida transformades per ser compatibles amb la SNN (entrades i sortides $\epsilon$ [0,1]), mentre que la SNN hereda els paràmetres apresos. Aquesta conversió es fonamenta en l’equivalència funcional entre les activacions mitjanes d’una ANN i la taxa de dispar d’una neurona de polsos, de manera que els pesos sinàptics poden conservar, almenys de forma aproximada, el comportament del model original.
+
+\begin {equation}
+z = \sum_{j} w_j x_j + b
+\qquad \Longleftrightarrow \qquad
+V(t+1) = \alpha V(t) + \sum_{j} w_j s_j(t) + b
+\end{equation}
+
+
+El procés de conversió requereix habitualment una normalització dels pesos i una definició acurada dels llindars de dispar de les neurones de polsos, amb l’objectiu d’evitar saturacions i garantir que les taxes d'actuació es mantinguin dins d’un rang operatiu adequat. Els biaixos de la ANN es poden interpretar com a corrents constants o desplaçaments del potencial de membrana en la SNN, integrant-se així en la dinàmica temporal del model. Un cop realitzada la transferència, la SNN pot operar sense necessitat d’entrenament addicional, o bé refinar-se mitjançant tècniques d’ajustament (fine-tuning) basades en mètodes específics de SNN com els ja mencionats.
+
+Aquest enfocament presenta diversos avantatges. En primer lloc, permet aprofitar la maduresa i estabilitat dels mètodes d’entrenament de les ANN, evitant les dificultats associades a la no diferenciabilitat del dispar de les SNNs. A més, facilita l’ús de SNNs en tasques on les ANN ja han demostrat un rendiment elevat, proporcionant una via directa per beneficiar-se del potencial estalvi energètic i del processament temporal propi de les xarxes de polsos. No obstant això, aquesta estratègia també presenta limitacions. La conversió sol requerir finestres temporals prou llargues perquè les taxes de dispar convergeixin cap a les activacions equivalents, la qual cosa pot incrementar la latència. A més, no totes les dinàmiques temporals pròpies de les SNNs són explotades en aquest enfocament, ja que el comportament final queda fortament condicionat pel model ANN original. Per aquest motiu, l’entrenament per conversió ANN-SNN s’utilitza principalment com una estratègia intermitja entre els mètodes clàssics de deep learning i els enfocaments específics de SNN, oferint un compromís entre rendiment, simplicitat i eficiència computacional.
 
 \begin{itemize}
 	\item Comparació tècnica: ANN vs SNN.
@@ -457,18 +540,16 @@ Aquests dos models representen els extrems del compromís entre fidelitat biolò
 
 \section{Impacte ambiental}
 
-\section*{Conclusions}
-\addcontentsline{toc}{section}{Conclusions}
+\section{Conclusions}
 
 \section*{Agraïments}
-\addcontentsline{toc}{section}{Agraïments}
 Gracies
 %----------------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------------
 
 %INICI BIBLIOGRAFIA
 
-\printbibliography
+\printbibliography[heading=bibintoc, title={Bibliografia}]
 
 %----------------------------------------------------------------------------------------------
 %------------------------------------------ANEXE-----------------------------------------------

@@ -80,8 +80,8 @@ class SNN():
         threshold= 1.0     # Llindar sortida
         decay = 0.9         # Leak (mantenim memòria)
 
-        v1 = torch.zeros(6) 
-        v2 = torch.zeros(1)
+        v1 = torch.zeros(self.w1.size(0))  # Inicialitzem potencials de membrana a zero
+        v2 = torch.zeros(self.w2.size(0))  # Inicialitzem potencials de membrana a zero
     
         dispars_totals = 0
         
@@ -288,6 +288,8 @@ if __name__ == '__main__':
 
     print("Evaluating grid...")
 
+    Puntsiguals = 0
+
     for y in y_vals:
         for x in x_vals:
             # ANN
@@ -297,9 +299,12 @@ if __name__ == '__main__':
                 mlp_y.append(y)
             # SNN
             p_snn = prediccio_snn(modelSNN, (x, y))
-            if p_snn >= threshold+0.1:
+            if p_snn >= threshold+0.11   :  # Ajustem el llindar per a SNN per compensar diferències
                 snn_x.append(x)
                 snn_y.append(y)
+            if ((p_mlp >= threshold) and (p_snn >= threshold+0.11)) or ((p_mlp < threshold) and (p_snn < threshold+0.11)):
+                Puntsiguals += 1
+    print(f"Punts iguals (ANN i SNN dins): {Puntsiguals} de {len(x_vals)*len(y_vals)}, {Puntsiguals/(len(x_vals)*len(y_vals))*100:.2f}%")
 
 # ------------------------
 # Plot
@@ -309,7 +314,7 @@ if __name__ == '__main__':
 
 # ANN plot
     axes[0].scatter(mlp_x, mlp_y, c='green', s=8)
-    axes[0].set_title("ANN (threshold ≥ 0.5)")
+    axes[0].set_title("ANN")
     axes[0].set_xlabel("X")
     axes[0].set_ylabel("Y")
     axes[0].set_xlim(-40, 40)
@@ -319,7 +324,7 @@ if __name__ == '__main__':
 
 # SNN plot
     axes[1].scatter(snn_x, snn_y, c='green', s=8)
-    axes[1].set_title("SNN (spike rate ≥ 0.5)")
+    axes[1].set_title("SNN")
     axes[1].set_xlabel("X")
     axes[1].set_xlim(-40, 40)
     axes[1].set_ylim(-20, 20)
