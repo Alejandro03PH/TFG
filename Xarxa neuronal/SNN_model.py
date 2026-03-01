@@ -8,10 +8,8 @@ import Dades
 
 train_loader, val_loader, test_loader = Dades.carregador_dades("Xarxa neuronal/dades.csv") # Carreguem les dades utilitzant la funció del mòdul Dades
 
-def computa_activacio_maxima(model, dataloader):
+def computa_activacio_maxima(model, dataloader): # Calcula la màxima activació de les capes ocultes i de sortida del model.
     """
-    Calcula la màxima activació de les capes ocultes i de sortida del model.
-
     Retorna:
         a1_max: Activació màxima de la capa oculta
         a2_max: Activació màxima de la capa de sortida
@@ -43,7 +41,7 @@ def computa_activacio_maxima(model, dataloader):
     if a2_max == 0.0:
         raise ValueError("a2_max es zero — capa de sortida mai activada.")
 
-    return a1_max, a2_max
+    return a1_max, a2_max # Activació màxima de la capa oculta i de sortida.
 
 model = Classificador()
 
@@ -95,7 +93,7 @@ class SNN():
             v1 = v1 * decay + corrent1
             
             spikes1 = (v1 >= threshold).float()
-            v1 = v1 - (spikes1 * threshold)  # Reset amb el SEU threshold
+            v1 = v1 - (spikes1 * threshold)  # Reset amb el threshold
             
             # CAPA SORTIDA 
             
@@ -116,24 +114,24 @@ class SNN():
 
 # 2. FUNCIONS AUXILIARS
 
-def prediccio_mlp(model, punt):
+def prediccio_mlp(model, punt): # Retorna la probabilitat del punt donat del model MLP.
     tensor = torch.tensor(normalize_xy(punt[0], punt[1]), dtype=torch.float32).unsqueeze(0)  # [1, 2]
     with torch.no_grad():
         prob = model(tensor).squeeze().item()
     return prob
 
-def prediccio_snn(model, punt):
+def prediccio_snn(model, punt): # Retorna la probabilitat del punt donat del model SNN.
     tensor = torch.tensor(normalize_xy(punt[0], punt[1]), dtype=torch.float32)
     with torch.no_grad():
         prob = model(tensor)   # already a float in [0,1]
     return prob
 
-def normalize_xy(x, y):
+def normalize_xy(x, y): # Normalitza les coordenades x i y al rang [0,1].
     x_norm = (x + 40.0) / 80.0   # maps [-40,40] → [0,1]
     y_norm = (y + 20.0) / 40.0   # maps [-20,20] → [0,1]
     return (x_norm, y_norm)
 
-def compute_output_max(model, dataloader):
+def compute_output_max(model, dataloader): # Calcula el valor màxim de sortida del model MLP a les dades de validació, per normalitzar després les prediccions.
         max_val = 0.0
         with torch.no_grad():
             for xb, _ in dataloader:
@@ -148,8 +146,7 @@ def compute_output_max(model, dataloader):
     print("RADIOGRAFIA COMPLETA (TOTS ELS PESOS I BIAIXOS)")
     print("="*60)
     
-    # Recorrem les capes lineals: 0 (Entrada), 2 (Oculta), 4 (Sortida)
-    # He afegit el 4 perquè també vegis la capa final
+    # Recorrem les capes lineals: 0 (Entrada), 2 (Oculta), 6 (Sortida)
     for idx in [0, 2, 4]:
         
         # Comprovació de seguretat per si la xarxa és més petita
@@ -172,9 +169,6 @@ def compute_output_max(model, dataloader):
             print(f"\n > PESOS (Matriu {w.shape[0]}x{w.shape[1]}):")
             print("   (Cada fila és una neurona de destí. Cada columna ve de l'entrada anterior)")
             print(w) # Imprimeix el Tensor directament, que es llegeix prou bé
-            
-            # Si prefereixes format llista per copiar-ho, descomenta la línia de sota:
-            # print(w.tolist())
 
     print("="*60 + "\n")"""
 
@@ -189,7 +183,7 @@ def compute_output_max(model, dataloader):
         mlp.eval()
         print(f"Pesos carregats de: {ruta}")
     except:
-        print("AVÍS: No s'han trobat els pesos. Usant pesos aleatoris (el mapa no tindrà sentit real).")
+        print("AVÍS: No s'han trobat els pesos. Usant pesos aleatoris.")
 
     # Instanciem l'SNN amb els pesos de l'MLP
     snn = SNN(mlp, a1_max, a2_max, passos_temps=50) # 50 passos és suficient per visualitzar
@@ -253,6 +247,72 @@ def compute_output_max(model, dataloader):
     plt.tight_layout()
     plt.show()"""
 
+def accuracy_snn(model_snn, dataloader, threshold=0.5): #Calcula percentatge d'encerts del model SNN contra les dades d'entrenament.
+    """
+    Calcula percentatge d'encerts del model SNN contra les etiquetes reals (Sortida) del CSV.
+    """
+    model_snn_out = []
+    y_true_out = []
+
+    correct = 0
+    total = 0
+
+    with torch.no_grad():
+        for xb, yb in dataloader:
+            # xb: [batch, 2] normalitzat
+            # yb: [batch, 1] amb 0/1 (float)
+            for i in range(xb.size(0)):
+                prob = float(model_snn(xb[i]))  # output en [0,1] aprox (dispars_totals / t)
+                pred = int(prob >= threshold)
+                y_true = int(yb[i].item() >= 0.5)
+
+                correct += (pred == y_true)
+                total += 1
+
+    acc = 100.0 * correct / max(total, 1)
+    return acc, correct, total
+
+def accuracy_mlp(model_mlp, dataloader, threshold=0.5): #Calcula percentatge d'encerts del model MLP contra les dades d'entrenament.
+
+    correct = 0
+    total = 0
+
+    with torch.no_grad():
+        for xb, yb in dataloader:
+            probs = model_mlp(xb).squeeze() 
+            preds = (probs >= threshold).int()  
+            y_true = (yb.squeeze() >= 0.5).int()  
+
+            correct += (preds == y_true).sum().item()
+            total += xb.size(0)
+
+    acc = 100.0 * correct / max(total, 1)
+    return acc, correct, total
+
+def trobar_millor_threshold(model, modelSNN, test_loader): # Funció per trobar el millor threshold per a cada model.
+    acc_ann = 0.0
+    porann = 0.0
+    acc_snn1 = 0.0
+    porsnn = 0.0
+    for j in range(30):  
+        threshold_snn = 0.5 + j*0.01
+        acc_snn,  ok_test,  n_test  = accuracy_snn(modelSNN, test_loader,  threshold_snn)
+        print(f"\nSNN Accuracy: {acc_snn:.2f}% ({ok_test}/{n_test} correctes). Threshold: {threshold_snn:.2f}")
+        if acc_snn > acc_snn1:
+            acc_snn1 = acc_snn
+            porsnn = threshold_snn
+
+    for i in range(30):
+        threshold_mlp = 0.5 + i*0.01 
+        acc_mlp,  ok_mlp,  n_mlp  = accuracy_mlp(model, test_loader,  threshold_mlp)
+        print(f"MLP Accuracy: {acc_mlp:.2f}% ({ok_mlp}/{n_mlp} correctes). Threshold: {threshold_mlp:.2f}")
+        if acc_mlp > acc_ann:
+            acc_ann = acc_mlp
+            porann = threshold_mlp
+    print(f"\nMillor Accuracy MLP: {acc_ann:.2f}% amb threshold {porann:.2f}")
+    print(f"\nMillor Accuracy SNN: {acc_snn1:.2f}% amb threshold {porsnn:.2f}")
+#--------------------------------------------------------------------------------------------------------------------
+
 if __name__ == '__main__':
     modelSNN = SNN(model, a1_max, a2_max, passos_temps=200)
     """while True:
@@ -277,18 +337,24 @@ if __name__ == '__main__':
             print(f"Probabilitat SNN: {scoreSNN:.4f}")            
 
         except ValueError:
-            print("El valor introduït no és un valor numèric.")"""
+            print("El valor introduït no és un valor numèric.")
     x_vals = np.arange(-40, 41, 1)
     y_vals = np.arange(-20, 21, 1)
 
     mlp_x, mlp_y = [], []
-    snn_x, snn_y = [], []
+    snn_x, snn_y = [], []"""
 
-    threshold = 0.5
 
-    print("Evaluating grid...")
+    print("Avaluant els models d'SNN i MLP contra del dataset...")
 
-    Puntsiguals = 0
+    threshold_mlp = 0.5 
+    threshold_snn = 0.59
+    acc_snn,  ok_test,  n_test  = accuracy_snn(modelSNN, test_loader,  threshold_snn)
+    acc_mlp,  ok_mlp,  n_mlp  = accuracy_mlp(model, test_loader,  threshold_mlp)
+    print(f"\nSNN Accuracy: {acc_snn:.2f}% ({ok_test}/{n_test} correctes)")
+    print(f"MLP Accuracy: {acc_mlp:.2f}% ({ok_mlp}/{n_mlp} correctes)")
+
+"""    Puntsiguals = 0
 
     for y in y_vals:
         for x in x_vals:
@@ -332,3 +398,4 @@ if __name__ == '__main__':
     axes[1].grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
+    """

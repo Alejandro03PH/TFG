@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     model = Classificador()   # Creem una instància del model
     epochs = 200     # Nombre d'èpoques
-    lr = 1e-5 # Taxa d'aprenentatge
+    lr = 1e-3 # Taxa d'aprenentatge
     weight_decay = 1e-5 # Decaïment de pesos
     criteri = nn.MSELoss()                     # Funció de pèrdua: MSELoss (Mean Squared Error Loss)
     optimizador = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)  # Optimitzador: Adam      
