@@ -1,0 +1,46 @@
+Començant entrenament de la xarxa CNN.
+Dataset: MNIST
+Filtres conv1: 32 | Filtres conv2: 64
+Capa oculta FC: 128 neurones
+Classes de sortida: 10
+Taxa d'aprenentatge: 0.001
+Decaïment de pesos: 1e-05
+Funció de pèrdua: CrossEntropyLoss
+Optimitzador: Adam
+Èpoques: 20
+Època 01 – train loss: 0.1505 – val loss: 0.0794 – val acc: 97.35%
+Època 02 – train loss: 0.0274 – val loss: 0.0504 – val acc: 98.45%
+Època 03 – train loss: 0.0056 – val loss: 0.0407 – val acc: 98.74%
+Època 04 – train loss: 0.0605 – val loss: 0.0429 – val acc: 98.65%
+Època 05 – train loss: 0.0457 – val loss: 0.0406 – val acc: 98.77%
+Època 06 – train loss: 0.0054 – val loss: 0.0372 – val acc: 98.86%
+Època 07 – train loss: 0.0003 – val loss: 0.0338 – val acc: 99.04%
+Època 08 – train loss: 0.0012 – val loss: 0.0369 – val acc: 99.02%
+Època 09 – train loss: 0.0265 – val loss: 0.0386 – val acc: 99.02%
+Època 10 – train loss: 0.0024 – val loss: 0.0451 – val acc: 98.89%
+Època 11 – train loss: 0.0095 – val loss: 0.0439 – val acc: 98.97%
+Època 12 – train loss: 0.0032 – val loss: 0.0465 – val acc: 99.00%
+Època 13 – train loss: 0.0007 – val loss: 0.0466 – val acc: 98.74%
+Època 14 – train loss: 0.0101 – val loss: 0.0501 – val acc: 98.91%
+Època 15 – train loss: 0.0103 – val loss: 0.0587 – val acc: 98.75%
+Època 16 – train loss: 0.0001 – val loss: 0.0480 – val acc: 99.02%
+Època 17 – train loss: 0.0007 – val loss: 0.0399 – val acc: 99.11%
+Early stopping activat.
+Test Loss: 0.0323, Percentatge d'encert: 99.11%
+Resumint l'entrenament des de l'època 18
+Taxa d'aprenentatge: 0.0001
+Decaïment de pesos: 1e-05
+Època 18 – train loss: 0.0004 – val loss: 0.0190 – val acc: 99.48%
+Època 19 – train loss: 0.0001 – val loss: 0.0157 – val acc: 99.57%
+Època 20 – train loss: 0.0595 – val loss: 0.0165 – val acc: 99.62%
+Època 21 – train loss: 0.0015 – val loss: 0.0275 – val acc: 99.38%
+Època 22 – train loss: 0.0078 – val loss: 0.0233 – val acc: 99.40%
+Època 23 – train loss: 0.0033 – val loss: 0.0241 – val acc: 99.37%
+Època 24 – train loss: 0.0003 – val loss: 0.0263 – val acc: 99.40%
+Època 25 – train loss: 0.0378 – val loss: 0.0308 – val acc: 99.33%
+Època 26 – train loss: 0.0307 – val loss: 0.0264 – val acc: 99.40%
+Època 27 – train loss: 0.0010 – val loss: 0.0242 – val acc: 99.45%
+Època 28 – train loss: 0.0000 – val loss: 0.0252 – val acc: 99.42%
+Època 29 – train loss: 0.0008 – val loss: 0.0273 – val acc: 99.46%
+Early stopping activat.
+Test Loss: 0.0422, Percentatge d'encert: 99.06%
