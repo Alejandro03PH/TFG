@@ -1,0 +1,1284 @@
+
+Percentil: 85.5% - conv1: 0.5635 | conv2: 1.8107 | fc1: 11.5843 | fc2: 25.2916
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1157/10000   Accuracy: 11.57%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 27 (0.27%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1162/10000   Accuracy: 11.62%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 26 (0.26%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1162/10000   Accuracy: 11.62%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 26 (0.26%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.62% amb percentil 85.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1161/10000   Accuracy: 11.61%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 27 (0.27%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.61% amb percentil 85.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1092/10000   Accuracy: 10.92%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 38 (0.38%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1107/10000   Accuracy: 11.07%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 35 (0.35%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1109/10000   Accuracy: 11.09%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 35 (0.35%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1111/10000   Accuracy: 11.11%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 36 (0.36%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1124/10000   Accuracy: 11.24%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 32 (0.32%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1131/10000   Accuracy: 11.31%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 32 (0.32%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1140/10000   Accuracy: 11.40%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 31 (0.31%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1148/10000   Accuracy: 11.48%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 29 (0.29%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1157/10000   Accuracy: 11.57%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 27 (0.27%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1160/10000   Accuracy: 11.60%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 26 (0.26%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1163/10000   Accuracy: 11.63%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 25 (0.25%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.63% amb percentil 91.0
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1172/10000   Accuracy: 11.72%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 25 (0.25%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.72% amb percentil 91.5
+Percentil 90 activacions � conv1: 0.6774 | conv2: 2.0930 | fc1: 13.0993 | fc2: 26.8097
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1178/10000   Accuracy: 11.78%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 25 (0.25%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.78% amb percentil 92.0
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1182/10000   Accuracy: 11.82%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 30 (0.30%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.82% amb percentil 92.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1185/10000   Accuracy: 11.85%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 32 (0.32%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.85% amb percentil 93.0
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1086/10000   Accuracy: 10.86%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 158 (1.58%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1188/10000   Accuracy: 11.88%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 35 (0.35%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.88% amb percentil 93.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1091/10000   Accuracy: 10.91%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 153 (1.53%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1090/10000   Accuracy: 10.90%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 161 (1.61%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 10.90% amb percentil 85.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1193/10000   Accuracy: 11.93%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 37 (0.37%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.93% amb percentil 94.0
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1058/10000   Accuracy: 10.58%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 104 (1.04%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1055/10000   Accuracy: 10.55%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 109 (1.09%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1195/10000   Accuracy: 11.95%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 39 (0.39%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.95% amb percentil 94.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1066/10000   Accuracy: 10.66%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 110 (1.10%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1060/10000   Accuracy: 10.60%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 109 (1.09%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1198/10000   Accuracy: 11.98%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 40 (0.40%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.98% amb percentil 95.0
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1064/10000   Accuracy: 10.64%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 114 (1.14%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1195/10000   Accuracy: 11.95%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 47 (0.47%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1069/10000   Accuracy: 10.69%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 109 (1.09%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1074/10000   Accuracy: 10.74%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 115 (1.15%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1195/10000   Accuracy: 11.95%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 52 (0.52%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1074/10000   Accuracy: 10.74%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 115 (1.15%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1080/10000   Accuracy: 10.80%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 117 (1.17%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1192/10000   Accuracy: 11.92%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 61 (0.61%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1076/10000   Accuracy: 10.76%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 120 (1.20%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1078/10000   Accuracy: 10.78%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 122 (1.22%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1191/10000   Accuracy: 11.91%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 68 (0.68%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1080/10000   Accuracy: 10.80%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 122 (1.22%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1080/10000   Accuracy: 10.80%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 131 (1.31%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1184/10000   Accuracy: 11.84%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 85 (0.85%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1088/10000   Accuracy: 10.88%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 126 (1.26%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1089/10000   Accuracy: 10.89%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 135 (1.35%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1172/10000   Accuracy: 11.72%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 106 (1.06%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1083/10000   Accuracy: 10.83%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 135 (1.35%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1084/10000   Accuracy: 10.84%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 148 (1.48%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1160/10000   Accuracy: 11.60%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 122 (1.22%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1091/10000   Accuracy: 10.91%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 146 (1.46%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1090/10000   Accuracy: 10.90%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 148 (1.48%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 10.90% amb percentil 90.0
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1126/10000   Accuracy: 11.26%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 168 (1.68%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1090/10000   Accuracy: 10.90%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 152 (1.52%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1086/10000   Accuracy: 10.86%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 157 (1.57%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1049/10000   Accuracy: 10.49%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 265 (2.65%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1087/10000   Accuracy: 10.87%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 171 (1.71%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1092/10000   Accuracy: 10.92%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 163 (1.63%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 837/10000   Accuracy: 8.37%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 510 (5.10%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1085/10000   Accuracy: 10.85%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 173 (1.73%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 10.85% amb percentil 91.0
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1095/10000   Accuracy: 10.95%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 146 (1.46%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1093/10000   Accuracy: 10.93%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 172 (1.72%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1089/10000   Accuracy: 10.89%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 150 (1.50%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1091/10000   Accuracy: 10.91%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 179 (1.79%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1100/10000   Accuracy: 11.00%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 147 (1.47%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 11.00% amb percentil 85.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1091/10000   Accuracy: 10.91%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 176 (1.76%)
+─────────────────────────────────────────────
+Nou màxim d'accuracy SNN: 10.91% amb percentil 91.5
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1068/10000   Accuracy: 10.68%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 105 (1.05%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1085/10000   Accuracy: 10.85%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 189 (1.89%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1059/10000   Accuracy: 10.59%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 105 (1.05%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1088/10000   Accuracy: 10.88%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 184 (1.84%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1066/10000   Accuracy: 10.66%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 107 (1.07%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1086/10000   Accuracy: 10.86%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 198 (1.98%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1067/10000   Accuracy: 10.67%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 105 (1.05%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1084/10000   Accuracy: 10.84%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 195 (1.95%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1072/10000   Accuracy: 10.72%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 105 (1.05%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1079/10000   Accuracy: 10.79%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 206 (2.06%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1067/10000   Accuracy: 10.67%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 116 (1.16%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1074/10000   Accuracy: 10.74%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 215 (2.15%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1074/10000   Accuracy: 10.74%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 222 (2.22%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1072/10000   Accuracy: 10.72%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 119 (1.19%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1077/10000   Accuracy: 10.77%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 219 (2.19%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1069/10000   Accuracy: 10.69%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 118 (1.18%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1066/10000   Accuracy: 10.66%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 236 (2.36%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1080/10000   Accuracy: 10.80%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 117 (1.17%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1062/10000   Accuracy: 10.62%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 239 (2.39%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1077/10000   Accuracy: 10.77%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 119 (1.19%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1050/10000   Accuracy: 10.50%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 255 (2.55%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1083/10000   Accuracy: 10.83%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 122 (1.22%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1046/10000   Accuracy: 10.46%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 260 (2.60%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1079/10000   Accuracy: 10.79%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 126 (1.26%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1023/10000   Accuracy: 10.23%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 289 (2.89%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1082/10000   Accuracy: 10.82%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 133 (1.33%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1027/10000   Accuracy: 10.27%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 286 (2.86%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1081/10000   Accuracy: 10.81%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 131 (1.31%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1010/10000   Accuracy: 10.10%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 307 (3.07%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1085/10000   Accuracy: 10.85%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 135 (1.35%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1014/10000   Accuracy: 10.14%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 303 (3.03%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1087/10000   Accuracy: 10.87%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 135 (1.35%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 985/10000   Accuracy: 9.85%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 341 (3.41%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1098/10000   Accuracy: 10.98%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 132 (1.32%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 986/10000   Accuracy: 9.86%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 340 (3.40%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1087/10000   Accuracy: 10.87%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 140 (1.40%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 955/10000   Accuracy: 9.55%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 376 (3.76%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1095/10000   Accuracy: 10.95%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 148 (1.48%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 954/10000   Accuracy: 9.54%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 376 (3.76%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1100/10000   Accuracy: 11.00%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 142 (1.42%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 903/10000   Accuracy: 9.03%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 435 (4.35%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1099/10000   Accuracy: 10.99%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 153 (1.53%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 909/10000   Accuracy: 9.09%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 429 (4.29%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1096/10000   Accuracy: 10.96%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 160 (1.60%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 845/10000   Accuracy: 8.45%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 501 (5.01%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1096/10000   Accuracy: 10.96%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 166 (1.66%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 841/10000   Accuracy: 8.41%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 505 (5.05%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1097/10000   Accuracy: 10.97%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 164 (1.64%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 776/10000   Accuracy: 7.76%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 583 (5.83%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1099/10000   Accuracy: 10.99%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 171 (1.71%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 777/10000   Accuracy: 7.77%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 583 (5.83%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1096/10000   Accuracy: 10.96%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 171 (1.71%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 685/10000   Accuracy: 6.85%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 689 (6.89%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1097/10000   Accuracy: 10.97%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 184 (1.84%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 680/10000   Accuracy: 6.80%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 694 (6.94%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1096/10000   Accuracy: 10.96%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 180 (1.80%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 545/10000   Accuracy: 5.45%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 836 (8.36%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1091/10000   Accuracy: 10.91%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 192 (1.92%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 544/10000   Accuracy: 5.44%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 837 (8.37%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1085/10000   Accuracy: 10.85%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 196 (1.96%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 331/10000   Accuracy: 3.31%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1058 (10.58%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1084/10000   Accuracy: 10.84%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 208 (2.08%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 333/10000   Accuracy: 3.33%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1056 (10.56%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1079/10000   Accuracy: 10.79%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 212 (2.12%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 133/10000   Accuracy: 1.33%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1256 (12.56%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1074/10000   Accuracy: 10.74%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 225 (2.25%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 133/10000   Accuracy: 1.33%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1256 (12.56%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1067/10000   Accuracy: 10.67%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 232 (2.32%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1063/10000   Accuracy: 10.63%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 241 (2.41%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1066/10000   Accuracy: 10.66%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 237 (2.37%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1055/10000   Accuracy: 10.55%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 254 (2.54%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1050/10000   Accuracy: 10.50%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 260 (2.60%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1034/10000   Accuracy: 10.34%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 278 (2.78%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1030/10000   Accuracy: 10.30%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 283 (2.83%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1000/10000   Accuracy: 10.00%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 319 (3.19%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 1004/10000   Accuracy: 10.04%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 318 (3.18%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 978/10000   Accuracy: 9.78%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 348 (3.48%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 978/10000   Accuracy: 9.78%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 350 (3.50%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 929/10000   Accuracy: 9.29%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 405 (4.05%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 929/10000   Accuracy: 9.29%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 405 (4.05%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 866/10000   Accuracy: 8.66%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 476 (4.76%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 879/10000   Accuracy: 8.79%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 466 (4.66%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 809/10000   Accuracy: 8.09%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 543 (5.43%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 802/10000   Accuracy: 8.02%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 549 (5.49%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 715/10000   Accuracy: 7.15%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 656 (6.56%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  SNN  ->  Encerts: 709/10000   Accuracy: 7.09%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 663 (6.63%)
+─────────────────────────────────────────────
+Percentil 90 activacions — conv1: 0.6754 | conv2: 2.0929 | fc1: 13.1677 | fc2: 26.8322
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8463/10000   Accuracy: 84.63%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1333 (13.33%)
+─────────────────────────────────────────────
+Percentil 90 activacions — conv1: 0.6740 | conv2: 2.0930 | fc1: 13.0205 | fc2: 26.8428
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8166/10000   Accuracy: 81.66%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 944 (9.44%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 81.66% amb percentil 85.5 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8195/10000   Accuracy: 81.95%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 965 (9.65%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 81.95% amb percentil 86.0 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8247/10000   Accuracy: 82.47%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 977 (9.77%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 82.47% amb percentil 86.5 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8279/10000   Accuracy: 82.79%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1012 (10.12%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 82.79% amb percentil 87.0 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8327/10000   Accuracy: 83.27%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1026 (10.26%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 83.27% amb percentil 87.5 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8353/10000   Accuracy: 83.53%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1077 (10.77%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 83.53% amb percentil 88.0 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8385/10000   Accuracy: 83.85%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1107 (11.07%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 83.85% amb percentil 88.5 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8434/10000   Accuracy: 84.34%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1107 (11.07%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 84.34% amb percentil 89.0 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8464/10000   Accuracy: 84.64%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1160 (11.60%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 84.64% amb percentil 89.5 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8472/10000   Accuracy: 84.72%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1213 (12.13%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 84.72% amb percentil 90.0 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8488/10000   Accuracy: 84.88%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1286 (12.86%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 84.88% amb percentil 90.5 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8477/10000   Accuracy: 84.77%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1371 (13.71%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8486/10000   Accuracy: 84.86%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1412 (14.12%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8477/10000   Accuracy: 84.77%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1486 (14.86%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8486/10000   Accuracy: 84.86%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1519 (15.19%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8462/10000   Accuracy: 84.62%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1583 (15.83%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8439/10000   Accuracy: 84.39%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1641 (16.41%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8386/10000   Accuracy: 83.86%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1748 (17.48%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8324/10000   Accuracy: 83.24%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1842 (18.42%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8245/10000   Accuracy: 82.45%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1977 (19.77%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8134/10000   Accuracy: 81.34%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 2147 (21.47%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9055/10000   Accuracy: 90.55%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 893 (8.93%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.55% amb percentil 96.0 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8980/10000   Accuracy: 89.80%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1004 (10.04%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8906/10000   Accuracy: 89.06%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1122 (11.22%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8750/10000   Accuracy: 87.50%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1347 (13.47%)
+─────────────────────────────────────────────
+Percentil 90 activacions — conv1: 0.6786 | conv2: 2.1018 | fc1: 13.1533 | fc2: 27.4277
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 7926/10000   Accuracy: 79.26%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 2414 (24.14%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 79.26% amb percentil 95.02 i 100 passos.
+Percentil 90 activacions — conv1: 0.6764 | conv2: 2.0954 | fc1: 13.1791 | fc2: 27.0514
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8459/10000   Accuracy: 84.59%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1340 (13.40%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 84.59% amb percentil 90.5 i 100 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8456/10000   Accuracy: 84.56%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1420 (14.20%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8446/10000   Accuracy: 84.46%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1482 (14.82%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8445/10000   Accuracy: 84.45%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1539 (15.39%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8427/10000   Accuracy: 84.27%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1615 (16.15%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8387/10000   Accuracy: 83.87%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1693 (16.93%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8344/10000   Accuracy: 83.44%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1781 (17.81%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8273/10000   Accuracy: 82.73%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1897 (18.97%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8199/10000   Accuracy: 81.99%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 2027 (20.27%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8137/10000   Accuracy: 81.37%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 2139 (21.39%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 7997/10000   Accuracy: 79.97%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 2326 (23.26%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 7815/10000   Accuracy: 78.15%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 2563 (25.63%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 7642/10000   Accuracy: 76.42%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 2791 (27.91%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 7315/10000   Accuracy: 73.15%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 3197 (31.97%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 6889/10000   Accuracy: 68.89%  (100 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 3720 (37.20%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8937/10000   Accuracy: 89.37%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 504 (5.04%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 89.37% amb percentil 90.5 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8959/10000   Accuracy: 89.59%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 540 (5.40%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 89.59% amb percentil 91.0 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9000/10000   Accuracy: 90.00%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 542 (5.42%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.00% amb percentil 91.5 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9012/10000   Accuracy: 90.12%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 572 (5.72%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.12% amb percentil 92.0 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9044/10000   Accuracy: 90.44%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 593 (5.93%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.44% amb percentil 92.5 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9063/10000   Accuracy: 90.63%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 617 (6.17%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.63% amb percentil 93.0 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9069/10000   Accuracy: 90.69%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 660 (6.60%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.69% amb percentil 93.5 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9080/10000   Accuracy: 90.80%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 711 (7.11%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.80% amb percentil 94.0 i 150 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9064/10000   Accuracy: 90.64%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 770 (7.70%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9074/10000   Accuracy: 90.74%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 807 (8.07%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9012/10000   Accuracy: 90.12%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 919 (9.19%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8984/10000   Accuracy: 89.84%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 996 (9.96%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8931/10000   Accuracy: 89.31%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1082 (10.82%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8822/10000   Accuracy: 88.22%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1225 (12.25%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 8668/10000   Accuracy: 86.68%  (150 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 1457 (14.57%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9032/10000   Accuracy: 90.32%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 273 (2.73%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9084/10000   Accuracy: 90.84%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 270 (2.70%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 90.84% amb percentil 90.5 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9128/10000   Accuracy: 91.28%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 282 (2.82%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 91.28% amb percentil 91.0 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9177/10000   Accuracy: 91.77%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 286 (2.86%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 91.77% amb percentil 91.5 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9210/10000   Accuracy: 92.10%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 299 (2.99%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 92.10% amb percentil 92.0 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9231/10000   Accuracy: 92.31%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 310 (3.10%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 92.31% amb percentil 92.5 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9260/10000   Accuracy: 92.60%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 318 (3.18%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 92.60% amb percentil 93.0 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9288/10000   Accuracy: 92.88%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 339 (3.39%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 92.88% amb percentil 93.5 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9298/10000   Accuracy: 92.98%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 368 (3.68%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 92.98% amb percentil 94.0 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9307/10000   Accuracy: 93.07%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 383 (3.83%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 93.07% amb percentil 94.5 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9318/10000   Accuracy: 93.18%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 423 (4.23%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 93.18% amb percentil 95.0 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9319/10000   Accuracy: 93.19%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 463 (4.63%)
+─────────────────────────────────────────────
+
+Nou màxim SNN: 93.19% amb percentil 95.5 i 200 passos.
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9303/10000   Accuracy: 93.03%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 513 (5.13%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9281/10000   Accuracy: 92.81%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 595 (5.95%)
+─────────────────────────────────────────────
+
+─────────────────────────────────────────────
+  CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+  SNN  ->  Encerts: 9203/10000   Accuracy: 92.03%  (200 passos)
+  SNN  ->  Casos amb 0 dispars a la classe predita: 729 (7.29%)
+─────────────────────────────────────────────
+Percentil 90 activacions — conv1: 0.8717 | conv2: 2.6338 | fc1: 16.1574 | fc2: 30.4845
+Percentil 90 activacions — conv1: 0.8659 | conv2: 2.6241 | fc1: 15.8791 | fc2: 29.3101
+Percentil 90 activacions — conv1: 0.8737 | conv2: 2.6380 | fc1: 16.1887 | fc2: 30.3092

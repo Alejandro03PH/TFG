@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNIST · CNN vs SNN</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --border: #d7def0;
+    --accent1: #2563eb;
+    --accent2: #ec4899;
+    --accent3: #14b8a6;
+    --text: #1f2937;
+    --muted: #5b6472;
+    --shadow: 0 18px 40px rgba(37, 99, 235, 0.12);
+    --sans: Arial, Calibri, Helvetica, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 3rem;
+    gap: 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    max-width: 1000px;
+  }
+
+  header h1 {
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1.15;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  header h1 span.cnn { color: var(--accent1); }
+  header h1 span.snn { color: var(--accent2); }
+
+  #status {
+    min-height: 1.4rem;
+    text-align: center;
+    font-size: 0.98rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  #status.loading { color: var(--accent1); }
+  #status.error { color: #dc2626; }
+
+  .layout {
+    width: 100%;
+    max-width: 1180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.35rem;
+  }
+
+  .canvas-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .canvas-wrap {
+    position: relative;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: crosshair;
+    background: #000;
+    box-shadow: var(--shadow);
+  }
+
+  #canvas {
+    display: block;
+    width: min(70vmin, 300px);
+    height: min(70vmin, 300px);
+    background: #000;
+    image-rendering: pixelated;
+    touch-action: none;
+  }
+
+  .canvas-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: calc(100% / 28) calc(100% / 28);
+    pointer-events: none;
+  }
+
+  .canvas-label {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: var(--sans);
+    font-size: 0.98rem;
+    padding: 0.8rem 1.3rem;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  }
+
+  button:hover { transform: translateY(-1px); }
+  button:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+  #btn-predict {
+    background: var(--accent1);
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+  }
+
+  #btn-clear {
+    background: #fff;
+    color: var(--accent2);
+    border-color: var(--accent2);
+  }
+
+  .results-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .result-panel {
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 1rem 1.15rem 1.15rem;
+    background: var(--panel);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+  }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 2px solid #eef2ff;
+    padding-bottom: 0.7rem;
+  }
+
+  .result-header .model-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .cnn-panel .model-name { color: var(--accent1); }
+  .snn-panel .model-name { color: var(--accent2); }
+
+  .result-header .prediction {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .confidence {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .confidence span {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 1.2rem 1fr 3.2rem;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .bar-track {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .cnn-panel .bar-fill { background: linear-gradient(90deg, #60a5fa, var(--accent1)); }
+  .snn-panel .bar-fill { background: linear-gradient(90deg, #f472b6, var(--accent2)); }
+
+  .bar-row.active .bar-label,
+  .bar-row.active .bar-pct {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .bar-pct { text-align: right; }
+
+  @media (max-width: 760px) {
+    .results-row {
+      grid-template-columns: 1fr;
+    }
+
+    #canvas {
+      width: min(88vmin, 520px);
+      height: min(88vmin, 520px);
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Comparativa de predicció del model de <span class="cnn">CNN</span> i el model d'<span class="snn">SNN</span></h1>
+</header>
+
+<div id="status">— Dibuixa un dígit i prem CLASSIFICAR —</div>
+
+<div class="layout">
+  <div class="canvas-panel">
+    <div class="canvas-wrap">
+      <canvas id="canvas" width="28" height="28"></canvas>
+    </div>
+    <div class="canvas-label">28 × 28 px</div>
+    <div class="btn-row">
+      <button id="btn-predict">Classificar</button>
+      <button id="btn-clear">Esborrar</button>
+    </div>
+  </div>
+
+  <div class="results-row">
+    <div class="result-panel cnn-panel">
+      <div class="result-header">
+        <span class="model-name">CNN</span>
+        <span class="prediction" id="cnn-digit">—</span>
+      </div>
+      <div class="confidence">Confiança: <span id="cnn-conf">—</span></div>
+      <div id="cnn-bars"></div>
+    </div>
+
+    <div class="result-panel snn-panel">
+      <div class="result-header">
+        <span class="model-name">SNN</span>
+        <span class="prediction" id="snn-digit">—</span>
+      </div>
+      <div class="confidence">Taxa màx: <span id="snn-conf">—</span></div>
+      <div id="snn-bars"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  let drawing = false;
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const x = Math.floor((src.clientX - rect.left) * scaleX);
+    const y = Math.floor((src.clientY - rect.top) * scaleY);
+    return [Math.max(0, Math.min(canvas.width - 1, x)), Math.max(0, Math.min(canvas.height - 1, y))];
+  }
+
+  function paintPixel(x, y) {
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(x, y, 1, 1);
+  }
+
+  function startDraw(e) {
+    e.preventDefault();
+    drawing = true;
+    const [x, y] = getPos(e);
+    paintPixel(x, y);
+  }
+
+  function draw(e) {
+    if (!drawing) return;
+    e.preventDefault();
+    const [x, y] = getPos(e);
+    paintPixel(x, y);
+  }
+
+  function stopDraw() {
+    drawing = false;
+  }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDraw);
+  canvas.addEventListener('mouseleave', stopDraw);
+  canvas.addEventListener('touchstart', startDraw, { passive: false });
+  canvas.addEventListener('touchmove', draw, { passive: false });
+  canvas.addEventListener('touchend', stopDraw);
+  canvas.addEventListener('touchcancel', stopDraw);
+
+  document.getElementById('btn-clear').addEventListener('click', () => {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    clearResults();
+    setStatus('— dibuixa un dígit i prem CLASSIFICAR —', '');
+  });
+
+  function buildBars(containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    for (let i = 0; i < 10; i++) {
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      row.id = `${containerId}-row-${i}`;
+      row.innerHTML = `
+        <span class="bar-label">${i}</span>
+        <div class="bar-track"><div class="bar-fill" id="${containerId}-fill-${i}"></div></div>
+        <span class="bar-pct" id="${containerId}-pct-${i}">—</span>`;
+      container.appendChild(row);
+    }
+  }
+  buildBars('cnn-bars');
+  buildBars('snn-bars');
+
+  function updateBars(prefix, probs) {
+    const best = probs.indexOf(Math.max(...probs));
+    for (let i = 0; i < 10; i++) {
+      const pct = (probs[i] * 100).toFixed(1);
+      document.getElementById(`${prefix}-fill-${i}`).style.width = pct + '%';
+      document.getElementById(`${prefix}-pct-${i}`).textContent = pct + '%';
+      document.getElementById(`${prefix}-row-${i}`).classList.toggle('active', i === best);
+    }
+  }
+
+  function clearResults() {
+    ['cnn', 'snn'].forEach(m => {
+      document.getElementById(`${m}-digit`).textContent = '—';
+      document.getElementById(`${m}-conf`).textContent = '—';
+    });
+    ['cnn-bars', 'snn-bars'].forEach(prefix => {
+      for (let i = 0; i < 10; i++) {
+        document.getElementById(`${prefix}-fill-${i}`).style.width = '0%';
+        document.getElementById(`${prefix}-pct-${i}`).textContent = '—';
+        document.getElementById(`${prefix}-row-${i}`).classList.remove('active');
+      }
+    });
+  }
+
+  function setStatus(msg, cls) {
+    const s = document.getElementById('status');
+    s.textContent = msg;
+    s.className = cls;
+  }
+
+  document.getElementById('btn-predict').addEventListener('click', async () => {
+    const btn = document.getElementById('btn-predict');
+    btn.disabled = true;
+    setStatus('classificant…', 'loading');
+
+    const small = document.createElement('canvas');
+    small.width = small.height = 28;
+    small.getContext('2d').drawImage(canvas, 0, 0, 28, 28);
+    const imageData = small.toDataURL('image/png');
+
+    try {
+      const res = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageData })
+      });
+      const data = await res.json();
+
+      const cnnBest = data.cnn.indexOf(Math.max(...data.cnn));
+      document.getElementById('cnn-digit').textContent = cnnBest;
+      document.getElementById('cnn-conf').textContent = (data.cnn[cnnBest] * 100).toFixed(1) + '%';
+      updateBars('cnn-bars', data.cnn);
+
+      const snnRaw = data.snn_raw;
+      const snnBest = snnRaw.indexOf(Math.max(...snnRaw));
+      const snnMax = snnRaw[snnBest];
+      document.getElementById('snn-digit').textContent = snnMax > 0 ? snnBest : '?';
+      document.getElementById('snn-conf').textContent = snnMax > 0 ? (snnMax * 100).toFixed(2) + '%' : '0 dispars';
+      updateBars('snn-bars', data.snn);
+
+      setStatus('— Classificació completada —', '');
+    } catch (err) {
+      setStatus('Error de connexió amb el servidor', 'error');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

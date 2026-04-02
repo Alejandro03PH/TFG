@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader, random_split
 from PIL import Image
 from MNIST_Train_model import ClassificadorCNN
 
+
 # ---------- Càrrega del dataset de validació (per calibrar els màxims) ----------
 
 transform = transforms.Compose([transforms.ToTensor()])
@@ -26,10 +27,16 @@ model.load_state_dict(checkpoint['model_state'])
 model.to(device)
 model.eval()
 
+# ---------- Nou log ----------
+
+def log_print(message):
+    with open('Xarxa neuronal/MNIST/MNIST_SNN_log.txt', 'a', encoding='utf-8') as f:
+        f.write(f'{message}\n')
+    print(f'{message}')
 
 # ---------- Càlcul de les activacions màximes per capa ----------
 
-def computa_activacio_maxima(model, dataloader, percentil=90.0):
+def computa_activacio_maxima(model, dataloader, percentil=95.5):
     """
     Recorre el dataset i calcula el percentil 90 de les activacions de cada capa ReLU.
     Aquest percentil es fa servir com a factor de normalització per convertir els pesos del CNN a taxes de dispar en la SNN.
@@ -82,7 +89,7 @@ def computa_activacio_maxima(model, dataloader, percentil=90.0):
 
 
 a1_max, a2_max, a3_max, a4_max = computa_activacio_maxima(model, val_loader)
-print(f"Percentil 99 activacions — conv1: {a1_max:.4f} | conv2: {a2_max:.4f} | fc1: {a3_max:.4f} | fc2: {a4_max:.4f}")
+log_print(f"Percentil 90 activacions — conv1: {a1_max:.4f} | conv2: {a2_max:.4f} | fc1: {a3_max:.4f} | fc2: {a4_max:.4f}")
 
 
 # ---------- Model SNN ----------
@@ -137,7 +144,7 @@ class SNN_CNN():
         for _ in range(self.t):
 
             # ---- Rate coding: generem spikes d'entrada proporcionals a la intensitat del píxel ----
-            input_spikes = (torch.rand_like(x_input) < x_input).float()  # [1, 1, 28, 28]
+            input_spikes = (torch.rand_like(x_input) < x_input).float()  # [1,1,28,28] spikes binaris on la probabilitat de spike és proporcional al valor del píxel
 
             # ---- CAPA 1: conv1 + pool -> potencial -> dispar ----
             corrent1 = self.pool(F.conv2d(input_spikes, self.w_conv1, self.b_conv1, padding=1))
@@ -217,9 +224,10 @@ def prediccio(model_cnn, model_snn, ruta_imatge):
  
 def avalua_models(model_cnn, model_snn, dataloader):
     """
-    Avalua el model CNN i el model SNN sobre un DataLoader complet i imprimeix
-    el percentatge d'encert de cadascun, igual que la funció accuracy_snn/accuracy_mlp
-    de l'SNN original però per a classificació de 10 classes (argmax).
+    Avalua el model CNN, el model SNN i la quantitat de vegades que la SNN no retorna res
+    sobre un DataLoader complet i imprimeix el percentatge d'encert de
+    cadascun, igual que la funció accuracy_snn/accuracy_mlp de l'SNN 
+    original però per a classificació de 10 classes (argmax).
     """
     cnn_correct = snn_correct = total = snn_0 = 0
  
@@ -248,11 +256,11 @@ def avalua_models(model_cnn, model_snn, dataloader):
     cnn_acc = cnn_correct / total * 100
     snn_acc = snn_correct / total * 100
  
-    print(f"\n{'─'*45}")
-    print(f"  CNN  ->  Encerts: {cnn_correct}/{total}   Accuracy: {cnn_acc:.2f}%")
-    print(f"  SNN  ->  Encerts: {snn_correct}/{total}   Accuracy: {snn_acc:.2f}%  ({model_snn.t} passos)")
-    print(f"  SNN  ->  Casos amb 0 dispars a la classe predita: {snn_0} ({snn_0/total*100:.2f}%)")
-    print(f"{'─'*45}")
+    log_print(f"\n{'─'*45}")
+    log_print(f"  CNN  ->  Encerts: {cnn_correct}/{total}   Accuracy: {cnn_acc:.2f}%")
+    log_print(f"  SNN  ->  Encerts: {snn_correct}/{total}   Accuracy: {snn_acc:.2f}%  ({model_snn.t} passos)")
+    log_print(f"  SNN  ->  Casos amb 0 dispars a la classe predita: {snn_0} ({snn_0/total*100:.2f}%)")
+    log_print(f"{'─'*45}")
  
     return cnn_acc, snn_acc
 
@@ -263,9 +271,9 @@ if __name__ == '__main__':
     dataset_test = datasets.MNIST(root='Xarxa neuronal/MNIST/dades', train=False, download=False, transform=transform)
     test_loader  = DataLoader(dataset_test, batch_size=64, shuffle=False, num_workers=0)
 
-    modelSNN = SNN_CNN(model, a1_max, a2_max, a3_max, a4_max, passos_temps=100)
+    modelSNN = SNN_CNN(model, a1_max, a2_max, a3_max, a4_max)
 
-    """while True:
+    while True:
         try:
             ruta = input("\nNom del fitxer d'imatge (o '/' per sortir): ").strip()
 
@@ -295,7 +303,4 @@ if __name__ == '__main__':
         except FileNotFoundError:
             print(f"No s'ha trobat el fitxer '{ruta}'. Comprova la ruta i torna-ho a intentar.") # type: ignore
         except ValueError as e:
-            print(f"Error: {e}")"""
-    
-    print("\nAvaluant CNN i SNN sobre el dataset de test de MNIST...")
-    avalua_models(model, modelSNN, test_loader)
+            print(f"Error: {e}")
