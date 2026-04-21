@@ -27,6 +27,17 @@ neuronals de polsos (SNNs).}
 
 %% Useful packages
 
+\usepackage{listings}
+\usepackage{xcolor}
+\lstdefinestyle{logs}{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false
+	captionpos=b
+}
 \usepackage{float}
 \usepackage{verbatim}
 \usepackage{amsmath}
@@ -35,6 +46,7 @@ neuronals de polsos (SNNs).}
 \graphicspath{{figures/}}
 \usepackage{multirow}
 \usepackage{caption}
+\captionsetup[lstlisting]{position=bottom}
 \usepackage{subcaption}
 \usepackage{wrapfig}
 \usepackage[colorinlistoftodos]{todonotes}
@@ -540,7 +552,7 @@ Per posar a prova l'eficàcia d'aquest tipus de xarxa, i més concretament de la
 
 %----------------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------------
-\section{Desenvolupament pràctic}
+\section{Desenvolupament pràctic: Classificació amb ANN i SNN}
 
 Per tal de posar a prova els fonaments tècnics exposats en el capítol anterior i avaluar la viabilitat de les SNNs en escenaris reals, la part pràctica d'aquest treball es centra en l'estudi comparatiu entre xarxes neuronals artificials convencionals i xarxes neuronals de polsos aplicades a una tasca de classificació. L'objectiu és analitzar fins a quin punt les SNNs poden reproduir el comportament funcional d'un model ANN ja entrenada, així com identificar els avantatges i limitacions que presenta aquesta transició.
 
@@ -550,37 +562,130 @@ A partir d'aquest model inicial, s'ha dut a terme la transformació dels paràme
 
 Finalment, els resultats obtinguts amb ambdós models s'han comparat de manera sistemàtica, amb l'objectiu d'analitzar les diferències de rendiment i de funcionament entre els dos. Aquesta comparativa permet valorar en quines condicions les SNNs poden esdevenir una alternativa viable a les ANN convencionals, especialment en contextos on el processament temporal o l'eficiència computacional són factors rellevants. D'aquesta manera, la part pràctica no només valida els conceptes teòrics presentats, sinó que també ofereix una visió aplicada del potencial de les SNNs en la indústria moderna.
 %----------------------------------------------------------------------------------------------
-\subsection{Generació de les dades d'entrenament}
+\subsection{Generació i transformació de les dades d'entrenament}
 
-Per poder portar a terme l'entrenament de l'ANN, primer hem de generar i adaptar les dades a utilitzar. Per fer-ho, s'ha utilitzat el programa de MATLAB, doncs degut a les seves eines gràfiques integrades que simplifiquen la manipulació geomètrica, i a la seva funció nativa \textit{inpolygon}, que permet, amb una sola crida, determinar de manera fiable si un punt cau dins d’un polígon arbitrari, evitant la necessitat d’implementar algoritmes de detecció de punts en polígon des de zero, el fan l’entorn ideal per a aquesta tasca. A més, MATLAB facilita la generació aleatòria de vectors i matrius i la interpolació de vèrtexs, funcions essencials per la generació de les dades.
+Per poder portar a terme l'entrenament de l'ANN, primer hem de generar i adaptar les dades a utilitzar. Per fer-ho, s'ha utilitzat el programa de MATLAB, doncs degut a les seves eines gràfiques integrades que simplifiquen la manipulació geomètrica, i a la seva funció nativa \textit{inpolygon}, que permet, amb una sola crida, determinar si un punt cau dins d’un polígon arbitrari, evitant així la necessitat d’implementar algoritmes de detecció de punts en polígon des de zero, el fan l’entorn ideal per a aquesta tasca. A més, MATLAB facilita la generació aleatòria de vectors i matrius i la interpolació de vèrtexs, funcions essencials per la generació de les dades necessaries.
 
-Així doncs, s'ha creat un script que agafa com a entrada la quantitat de vèrtex que ha de tenir el polígon, i la quantitat de punts del perímetre a retornar, i retorna aquesta quantitat p de punts en una matriu 2xp d'un polígon pseudo-aleatòriament generat. Aquest no és realment aleatori degut
-a les limitacions inherents dels ordinadors, que són màquines deterministes, i per tant qualsevol generador basat només en programari produeix pseudo-aleatorietat i mai serà completament aleatori. Per a l’objectiu de generar polígons però, aquesta pseudo‑aleatorietat és suficient.
+Així doncs, s'ha creat un script que agafa com a entrada la quantitat de vèrtex que ha de tenir el polígon, i la quantitat de punts del perímetre a retornar, i retorna aquesta quantitat p de punts en una matriu 2xp d'un polígon pseudo-aleatòriament generat. Aquest no és realment aleatori degut a les limitacions inherents dels ordinadors, que són màquines deterministes, i per tant qualsevol generador basat només en programari produeix pseudo-aleatorietat i mai serà completament aleatori. Per a l’objectiu de generar polígons però, aquesta pseudo‑aleatorietat és suficient.
+Un cop creat l'escript, s'executa per generar el següent poligon, que es mostra a la \autoref{fig:polygon}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{PoligonClassificador.png}
+	\caption{Polígon generat per l'script de MATLAB.}
+	\label{fig:polygon}
+\end{figure}
 
-Un cop
+Una vegada generat el polígon que s'utilitzarà com a frontera de classificació, s'ha generat un altre script per generar les dades que s'utilitzaran per l'entrenament de l'ANN. Aquest script agafa com a entrada la quantitat de punts a generar i el polígon, expresat en punts del seu perímetre, i retorna una matriu 3xp, on cada columna representa un punt de coordenades (x,y) i la seva classe associada (0 o 1, depenent de si el punt cau dins o fora del polígon). La generació dels punts es realitza de manera pseudo-aleatòria, fent-se servir la funció nativa de MATLAB \textit{rand} per generar punts uniformement distribuïts dins d'un quadrat que engloba el polígon, i de la funció \textit{inpolygon} per determinar si cada punt cau dins o fora del polígon. Un cop obtinguda la matriu de dades, l'escript les guarda en un fitxer .csv que posteriorment serà carregat per l'entrenament de l'ANN, i genera una figura que mostra els punts generats, amb diferents colors segons la classe a la que pertanyen, com es pot veure a la \autoref{fig:training_data}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{ClassificacioDades.png}
+	\caption{Dades d'entrenament generades, amb punts de classe 0 (fora del polígon) en vermell i punts de classe 1 (dins del polígon) en vert.}
+	\label{fig:training_data}
+\end{figure}
+
+Amb el conjunt de dades exportat en format .csv, aquest es carrega a Python mitjançant el fitxer anomenat Dades.py, encarregat de dur a terme tot el preprocessament previ a l’entrenament de la xarxa neuronal. En primer lloc, aquest fitxer carrega les dades del .csv fent-se ajuda de la llibreria pandas, extreu les coordenades i les classes dels punts, i les ordena en columnes separades, de nom x i y per les coordenades, i Sortida per les classes. Tot seguit, les dades es converteixen al format numèric float32, format ampliament utilitzat en el deep learning degut a la seva eficiència computacional, i es normalitzen linealment les coordenades al rang [0,1], fent correspondre l’interval $x \in [-40,40]$ i l’interval $y \in [-20,20]$ a aquest mateix rang, intervals que es corresponen amb els utilitzats en la generació de les dades. En l'entrenament d'una ANN, i més concretament d'un MLP, com és el cas, no és necessari fer aquesta normalització, doncs els pesos i biaixos de la xarxa poden adaptar-se a les escales de les dades d'entrada. No obstant això, aquesta normalització es realitza per possibilitar la posterior conversió a SNN, ja que aquests tipus de xarxes requereixen que les entrades i sortides es trobin dins d'un rang específic, com ara $[0,1]$, ja que els polsos que generen les neurones de polsos es poden interpretar com a valors binaris, i la taxa de dispar d'una neurona de polsos es correspon amb el valor de l'activació mitjana d'una ANN, per tant, per mantenir aquesta equivalència funcional, és necessari que les dades d'entrada i sortida es trobin dins d'aquest rang. Un cop normalitzades, tant les dades d’entrada com les etiquetes es transformen en tensors de PyTorch, format que permet utilitzar les eines d’aquesta llibreria per a l’entrenament de la xarxa neuronal, i es divideixen de manera aleatòria en subconjunts d'entrenament, validació i test. Aquest pas evita que les mostres mantinguin l’ordre original del fitxer i garanteix una distribució més representativa dels exemples en cada subconjunt, alhora que permet avaluar de manera més fiable el rendiment del model en dades no vistes durant l'entrenament. Finalment, el fitxer Dades.py retorna els tensors corresponents als subconjunts d'entrenament, validació i test, que seran utilitzats en la fase d'entrenament de l'ANN.
 
 %----------------------------------------------------------------------------------------------
 \subsection{Creació, entrenament i avaluació de la ANN}
-\begin{itemize}
-	\item Maneres existents per la conversió ANN a SNN (rate-based conversion, etc.).
-	\item Implementació pròpia o us/adaptació de llibreries.
-	\item Explicació del procés de conversió.
-	\item Resultats de inferència con la SNN convertida.
-	\item Limitacions observades.
-\end{itemize}
+
+Un cop processades les dades, es procedeix a la definició i entrenament d’una xarxa neuronal artificial convencional, més concretament un MLP, que actuï com a classificador binari dels punts generats. La implementació s’ha dut a terme en Python utilitzant la llibreria PyTorch, escollida per la seva flexibilitat i facilitat d’ús en el desenvolupament de models de deep learning, així com per la seva àmplia comunitat i suport. Es comença definint una classe que hereta de \textit{torch.nn.Module}, que representa el model de xarxa neuronal. Aquesta classe inclou la definició de les capes lineals i les funcions d'activació, així com el mètode \textit{forward} que especifica com es processa la informació a través de la xarxa. Per aquest cas i tenint en compte que la finalitat del primer model és demostrar la viabilitat de la conversió a SNN, s'ha optat per una arquitectura senzilla, composta per una capa d'entrada de 2 neurones (corresponent a les coordenades x i y), una capa oculta de 6 neurones amb funció d'activació ReLU, i una capa de sortida de 1 neurona també amb funció d'activació ReLU. Per la tasca a realitzar per la ANN, una alternativa potser més adient hagués estat triar la funció d'activació sigmoide a la capa de sortida, ja que aquesta funció comprimeix les sortides al rang [0,1], facilitant la interpretació de la sortida. No obstant això, s'ha optat per la funció ReLU per mantenir una coherència amb la posterior conversió a SNN, doncs les sortides de la ANN es poden interpretar com a taxes de dispar d'una SNN, i la modificació que aplica la funció d'activació Sigmoide sobre aquesta és no lineal, cosa que afectaria negativament al procés de conversió, mentre que la funció ReLU manté una relació més directa amb la conversió a SNN, només eliminant els numeros negatius, i deixant les sortides positives intactes. Un cop definida l'arquitectura del model, es procedeix a l'entrenament utilitzant un optimizador de tipus Adam i una funció de pèrdua de tipus Mean Squared Error (MSE). Per una tasca de classificació binaria, tornem a trobar que existeix una funció més adient, com és la Binary Cross-Entropy (BCE), però de nou obtem per una que facilita el procés de conversió, doncs a diferencia d'un model entrenat amb la funció BCE, un entrenat amb MSE no optimitza per una probabilitat logística “pura”, sinó per un valor escalar de resposta (en aquest cas 0 o 1), cosa que assimila més el seu comportament al d'un model SNN.
+El procés d'entrenament es realitza durant un nombre determinat d'èpoques, durant les quals el model ajusta els seus pesos i biaixos per minimitzar la pèrdua en el conjunt d'entrenament. A aquesta quantitat arbitrària d'epoques se li aplica una funció d'aturada prematura, que mesura el rendiment del model en el subconjunt de validació després de cada època, el mostra, i si detecta que aquesta no millora, l'atura. Durant el procés d'entrenament, es registren en un arxiu separat anomenat $\texttt{entrenament\_log}$ les mètriques de rendiment, com ara la pèrdua i l'exactitud, tant en el conjunt d'entrenament com en el de validació, per a cada època. Es pot veure un exemple de les mètriques registrades en l'arxiu $\texttt{entrenament\_log}$ al \autoref{lst:logs_ann}.
+
+\vspace{2mm}
+
+\begin{lstlisting}[style=logs, caption={Fragment dels logs d'entrenament de la ANN}, captionpos=b, label={lst:logs_ann}]
+Comencant entrenament de la xarxa.
+Neurones d'entrada: 2
+Neurones de capes ocultes: 6
+Capes ocultes: 1
+Neurones de sortida: 1
+Taxa d'aprenentatge: 0.001
+Decaiment de pesos: 1e-05
+Funcio de perdua: Mean Squared Error Loss
+Optimitzador: Adam
+Epoques: 200
+
+Epoca 01   train loss: 0.2143   val loss: 0.1987
+Epoca 02   train loss: 0.1761   val loss: 0.1542
+Epoca 03   train loss: 0.1328   val loss: 0.1194
+...
+Test Loss: 0.0412, Percentatge d'encert: 94.37 %
+\end{lstlisting}
+
+Un cop finalitzat l'entrenament, el model es guarda en un fitxer anomenat $\texttt{Pesos\_classificador.pth}$, que conté els pesos i biaixos apresos, i es procedeix a avaluar el rendiment del model en el subconjunt de test, obtenint una mètrica d'exactitud que serveix com a referència per a la posterior comparació amb la SNN convertida.
+
+Per tal de comprovar de manera més intuïtiva i visual el comportament del model entrenat, s’ha desenvolupat un segon arxiu en Python anomenat $\texttt{Test\_model.py}$, destinat específicament a la fase de prova de la xarxa neuronal. Aquest script carrega el model prèviament entrenat i guardat al fitxer de pesos i restaurant l’estat dels paràmetres apresos durant l’entrenament. Un cop carregat, el model es posa en mode d’avaluació, cosa que garanteix que la xarxa treballi exclusivament en fase d’inferència i no modifiqui els seus pesos interns. A partir d’aquí, l’script permet a l’usuari introduir manualment les coordenades d’un punt concret del pla, i retrona la predicció que realitza l'ANN. Per fer-ho, les coordenades introduïdes es processen de la mateixa manera que durant la fase d’entrenament. Primer es normalitzen al rang [0,1], mantenint la coherència amb el preprocessament aplicat al conjunt de dades original, i posteriorment es transformen en un tensor de PyTorch amb el format adequat perquè pugui ser processat pel model. A més, l’script incorpora el càlcul del valor màxim de sortida obtingut sobre el conjunt de validació, que s’utilitza com a factor de normalització per expressar la resposta del model d’una manera més interpretable, es a dir, en un rang de [0,1], igual que amb les dades d'entrada. D’aquesta manera, en lloc de mostrar únicament la sortida bruta de la xarxa, es presenta una magnitud normalitzada que es pot interpretar com una probabilitat aproximada que el punt es trobi dins del polígon. Aquesta normalització permet entendre millor la resposta del model, doncs es veu com, al apropar-se al límit del polígon, la sortida va disminuint progressivament, i com els punts que es troben clarament dins del polígon obtenen una resposta propera a 1, mentre que els punts clarament fora del polígon obtenen una resposta propera a 0, sent els punts de frontera els que obtenen respostes intermitges.
 %----------------------------------------------------------------------------------------------
 \subsection{Conversió a SNN}
-\begin{itemize}
-	\item Justificació de la necessitat de maquinari específic.
-	\item Descripció d'arquitectura maquinari proposada.
+Un cop entrenada i validada la xarxa neuronal artificial convencional, el següent pas consisteix en la seva conversió a una xarxa neuronal de polsos. Aquesta conversió s’ha implementat al fitxer $\texttt{SNN\_model.py}$, on es carrega el model ANN entrenat, se n’extreuen els pesos i biaixos, i es redefineix el càlcul de la xarxa dins d’un marc temporal discret basat en polsos. L’objectiu d’aquesta etapa no és tornar a entrenar el model des de zero, sinó conservar tant com sigui possible el comportament funcional de la ANN original i reinterpretar-lo. Per fer-ho, es parteix directament del classificador definit a $\texttt{Train\_model.py}$, amb arquitectura $2\rightarrow6\rightarrow1$, i se’n carreguen els pesos guardats després de l’entrenament.
+La conversió es basa en l’equivalència de funcionament entre l’activació d’una neurona en una ANN i la taxa de dispar d’una neurona en una SNN. En lloc de treballar amb sortides contínues calculades en un únic pas, la SNN replica la mateixa transformació mitjançant una seqüència de passos temporals, en què les neurones acumulen corrent d’entrada, apliquen una dinàmica de memòria amb fuga i generen un pols quan el potencial de membrana supera un llindar determinat, com s'explica amb més detall a l'apartat anterior.
+El primer element important de la conversió és la codificació de les entrades. En el model implementat no s’utilitza una codificació temporal complexa, sinó una codificació per taxa o \textit{rate encoding}. A cada pas temporal, cada coordenada d’entrada, ja normalitzada al rang [0,1], es transforma en un pols binari segons una regla estocàstica simple es genera un nombre aleatori uniforme i es compara amb el valor de l’entrada, de manera que com més gran és aquest valor, més probable és que la neurona d’entrada dispari en aquell instant. Això implica que una entrada propera a 1 generarà molts més polsos al llarg d'un interval de temps determinat que una entrada propera a 0. En conseqüència, la informació no es codifica en la magnitud directa del senyal, sinó en la freqüència relativa de polsos produïda durant els passos de simulació. En el codi, aquesta operació es realitza mitjançant l’expressió $\texttt{(torch.rand\_like(x\_input) < x\_input).float()}$, que constitueix el mecanisme de codificació d’entrada de la SNN. Al \autoref{lst:Codificacio_entrada} es pot veure un fragment del codi on es realitza aquesta codificació per taxa de les entrades, i com aquest modifica els paràmetres internals de la xarxa SNN.
+\newpage
+\begin{lstlisting}[style=logs, caption={Fragment de la codificació per taxa de les entrades, paràmetres interns i sortides}, captionpos = b, label={lst:Codificacio_entrada}]
+	def forward(self, x_input):
+              
+        # --- CAPA 1 (Entrada -> Oculta 1) ---
 
-	\item Neurones i sinapsi com a blocs funcionals.
-	\item Controlador de spikes, temporització, etc.
+        threshold= 1.0     # Llindar sortida
+        decay = 0.9        # Leak (mantenim memoria)
 
-	\item Eines usades (e.g., llenguatge HDL, simuladors, disseny esquemàtic).
-	\item Diagrama funcional i/o esquemàtic.
-	\item Possibles millores o extensions (FPGA, xips neuromòrfics com Loihi, etc.).
-\end{itemize}
+        v1 = torch.zeros(self.w1.size(0))  # Inicialitzem potencials de membrana a zero
+        v2 = torch.zeros(self.w2.size(0))  # Inicialitzem potencials de membrana a zero
+    
+        dispars_totals = 0
+        
+        for pas in range(self.t):
+            
+            # Input rate coding
+            input_spikes = (torch.rand_like(x_input) < x_input).float()
+
+            # CAPA OCULTA
+            corrent1 = torch.matmul(input_spikes, self.w1.T) + self.b1
+            v1 = v1 * decay + corrent1
+            
+            spikes1 = (v1 >= threshold).float()
+            v1 = v1 - (spikes1 * threshold)  # Reset amb el threshold
+            
+            # CAPA SORTIDA 
+            
+            corrent2 = torch.matmul(spikes1, self.w2.T) + self.b2
+            v2 = v2 * decay + corrent2
+            
+            spike_out = (v2 >= threshold).float()
+            v2 = v2 - (spike_out * threshold)
+            
+            if spike_out > 0:
+                dispars_totals += 1
+\end{lstlisting}
+
+El segon element important que apareix és la normalització dels pesos i dels biaixos de la ANN abans d’introduir-los a la SNN. En el codi, abans de crear la xarxa de polsos, es calcula l’activació màxima observada a la capa oculta i a la capa de sortida del model original sobre el conjunt de validació. Aquests valors, anomenats $\texttt{a1\_max}$ i $\texttt{a2\_max}$, s’utilitzen com a factors de normalització per dividir, respectivament, els pesos i els biaixos de la primera capa i els de la capa de sortida. Això permet reduir l’amplitud efectiva dels corrents injectats a les neurones de polsos i evitar que el potencial de membrana saturi massa ràpidament. En altres paraules, aquesta normalització serveix per adaptar l’escala d’activació de la ANN a l’escala de la SNN, on les neurones només poden emetre polsos quan superen un llindar fix. Si no es dugués a terme aquesta etapa, seria probable que algunes neurones disparessin de manera gairebé contínua o, a l’inrevés, que no arribessin mai a superar el llindar, degradant significativament el comportament del model convertit.
+Un cop codificades les entrades i normalitzats els paràmetres, la dinàmica interna de la SNN es construeix amb dues capes de neurones de polsos. La primera rep els polsos d’entrada i calcula un corrent sinàptic a partir del producte entre els polsos i la matriu de pesos $W_1$, sumant-hi el vector de biaix $b_1$. El potencial de membrana de cada neurona es va actualitzant en el temps segons una dinàmica amb fuga, modelada per un factor \texttt{decay = 0.9}. Quan aquest potencial supera el llindar fixat a \texttt{threshold = 1.0}, la neurona emet un pols i el potencial es redueix restant aquest llindar (0.0 + biaix), implementant així un mecanisme de reset. La capa de sortida funciona de la mateixa manera, rebent com a entrada els polsos de la capa oculta i acumulant-los temporalment fins que genera els polsos finals de sortida. La resposta del model no és una probabilitat contínua com en el cas de la ANN, sinó la proporció de polsos emesos per la neurona de sortida al llarg de l'interval de temps, és a dir, $\texttt{dispars\_totals / t}$. En l’avaluació final, la implementació utilitza una finestra de \texttt{200} passos temporals. Al \autoref{lst:Normalitzacio_pesos} es pot veure un fragment del codi on es realitza aquesta normalització dels pesos i biaixos a les diferents capes de la SNN.
+
+\vspace{3mm}
+\begin{lstlisting}[style=logs, caption={Fragment de la implementacio de la classe SNN utilitzada i conversió de pesos i biaixos de l'ANN a l'SNN}, captionpos = b, label={lst:Normalitzacio_pesos}]
+class SNN():
+    def __init__(self, mlp_model, a1_max, a2_max, passos_temps=50):
+        self.t = passos_temps
+        
+        # Extraccio de pesos i biaixos de l'MLP per a l'SNN:
+        
+        # Capa 1
+        self.w1 = mlp_model.net[0].weight.data / a1_max  # Matriu 6x2
+        self.b1 = mlp_model.net[0].bias.data / a1_max    # Vector 6
+        
+        # Capa Sortida
+        self.w2 = mlp_model.net[2].weight.data / a2_max  # Matriu 1x6
+        self.b2 = mlp_model.net[2].bias.data / a2_max    # Vector 1
+
+\end{lstlisting}
+
+Per avaluar la SNN convertida, el codi inclou una funció específica d’\textit{accuracy}, que recorre el conjunt de prova i, per a cada punt, calcula la sortida de la SNN, la compara amb un llindar de decisió i n’obté la classe predita. A diferència de la ANN, que en l’avaluació base utilitza un llindar de 0.5, per a la SNN un llindar de 0.59 per compensar la diferència en l'escala de sortida, doncs al haver utilitzat la funció ReLU a la ANN, l'output d'aquesta podia donar valors superiors a 1, i per tant el theshold de 0,5 no és exactament la meitat, i hem de compensar a la SNN per assimilar la seva precisió.
+Aquesta mena de conversió acostuma a preservar raonablement bé el comportament de la xarxa en el nucli principal de cada regió de classificació, és a dir, en aquelles zones del pla on la ANN original produeix activacions clarament per sobre o clarament per sota del llindar. En aquestes regions, la separació entre classes és prou robusta perquè les fluctuacions introduïdes pel \textit{rate encoding} i per la discretització temporal tinguin un efecte limitat. Per contra, és esperable que les pèrdues de precisió apareguin sobretot a prop de la frontera de decisió, on petits canvis en la taxa de dispar, en el nombre de passos temporals simulats o en el llindar final poden alterar la classe assignada al punt. Aquesta degradació és coherent amb el fet que la SNN implementada utilitza una codificació estocàstica i una finestra temporal finita. La sortida d'aquesta és una aproximació mitjana al comportament de la ANN, però no una reproducció exacta punt a punt, especialment en les zones més ambigües del problema. No obstant això, en la pràctica, aquesta aproximació pot ser suficient per a moltes aplicacions, especialment aquelles on la robustesa i l'eficiència energètica de les SNNs compensen les petites pèrdues de precisió en les zones de frontera. Cal remarcar que, per utilitats on la precisió és crítica, és habitual aplicar després de la conversió un procés de reentrenament o ajustament (fine-tuning) de la SNN, que permet refinar els pesos i biaixos dins del marc temporal de la SNN per recuperar part de la precisió perduda durant la conversió inicial. En aquest cas, però, s'ha optat per no realitzar aquest pas addicional, per tal de mantenir el focus en la comparativa directa entre el model ANN original i la SNN convertida sense entrenament addicional.
+%----------------------------------------------------------------------------------------------
+\subsection{Resultats i comparativa de rendiment}
+%----------------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------------
+\section{Desenvolupament pràctic: Aplicació del dataset MNIST amb ANN i SNN com a simulació de cas d'ús real}
 %----------------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------------
 \section{Resultats}

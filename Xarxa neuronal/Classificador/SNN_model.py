@@ -337,12 +337,13 @@ if __name__ == '__main__':
             print(f"Probabilitat SNN: {scoreSNN:.4f}")            
 
         except ValueError:
-            print("El valor introduït no és un valor numèric.")
+            print("El valor introduït no és un valor numèric.")"""
+    threshold = 0.5
     x_vals = np.arange(-40, 41, 1)
     y_vals = np.arange(-20, 21, 1)
 
     mlp_x, mlp_y = [], []
-    snn_x, snn_y = [], []"""
+    snn_x, snn_y = [], []
 
 
     print("Avaluant els models d'SNN i MLP contra del dataset...")
@@ -354,7 +355,7 @@ if __name__ == '__main__':
     print(f"\nSNN Accuracy: {acc_snn:.2f}% ({ok_test}/{n_test} correctes)")
     print(f"MLP Accuracy: {acc_mlp:.2f}% ({ok_mlp}/{n_mlp} correctes)")
 
-"""    Puntsiguals = 0
+    Puntsiguals = 0
 
     for y in y_vals:
         for x in x_vals:
@@ -398,4 +399,3 @@ if __name__ == '__main__':
     axes[1].grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
-    """
