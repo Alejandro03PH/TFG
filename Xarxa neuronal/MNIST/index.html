@@ -412,7 +412,7 @@
       const snnBest = snnRaw.indexOf(Math.max(...snnRaw));
       const snnMax = snnRaw[snnBest];
       document.getElementById('snn-digit').textContent = snnMax > 0 ? snnBest : '?';
-      document.getElementById('snn-conf').textContent = snnMax > 0 ? (snnMax * 100).toFixed(2) + '%' : '0 dispars';
+      document.getElementById('snn-conf').textContent = snnMax > 0 ? (snnMax * 100).toFixed(2) : '0 dispars';
       updateBars('snn-bars', data.snn);
 
       setStatus('— Classificació completada —', '');
