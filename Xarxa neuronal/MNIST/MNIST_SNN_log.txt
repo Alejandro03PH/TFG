@@ -1282,3 +1282,5 @@ Nou màxim SNN: 93.19% amb percentil 95.5 i 200 passos.
 Percentil 90 activacions — conv1: 0.8717 | conv2: 2.6338 | fc1: 16.1574 | fc2: 30.4845
 Percentil 90 activacions — conv1: 0.8659 | conv2: 2.6241 | fc1: 15.8791 | fc2: 29.3101
 Percentil 90 activacions — conv1: 0.8737 | conv2: 2.6380 | fc1: 16.1887 | fc2: 30.3092
+Percentil 90 activacions — conv1: 0.8732 | conv2: 2.6487 | fc1: 16.1750 | fc2: 29.8445
+Percentil 95.5 activacions — conv1: 0.8692 | conv2: 2.6386 | fc1: 15.9389 | fc2: 30.1085

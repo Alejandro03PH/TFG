@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
-import time
 from Train_model import Classificador
 import Dades
 
@@ -311,6 +310,114 @@ def trobar_millor_threshold(model, modelSNN, test_loader): # Funció per trobar 
             porann = threshold_mlp
     print(f"\nMillor Accuracy MLP: {acc_ann:.2f}% amb threshold {porann:.2f}")
     print(f"\nMillor Accuracy SNN: {acc_snn1:.2f}% amb threshold {porsnn:.2f}")
+
+    #--------------------------------------------------------------------------------------------------------------------
+# 3. MATRIUS DE CONFUSIÓ ANN / SNN
+
+def matriu_confusio_mlp(model_mlp, dataloader, threshold=0.5):
+    """
+    Calcula la matriu de confusió per al model ANN/MLP.
+
+    Format de la matriu:
+                    Predicció
+                  0          1
+    Real 0      TN         FP
+    Real 1      FN         TP
+    """
+
+    tn, fp, fn, tp = 0, 0, 0, 0
+
+    model_mlp.eval()
+
+    with torch.no_grad():
+        for xb, yb in dataloader:
+            probs = model_mlp(xb).squeeze()
+            preds = (probs >= threshold).int()
+            y_true = (yb.squeeze() >= 0.5).int()
+
+            for pred, real in zip(preds, y_true):
+                pred = int(pred.item())
+                real = int(real.item())
+
+                if real == 0 and pred == 0:
+                    tn += 1
+                elif real == 0 and pred == 1:
+                    fp += 1
+                elif real == 1 and pred == 0:
+                    fn += 1
+                elif real == 1 and pred == 1:
+                    tp += 1
+
+    return np.array([[tn, fp],
+                     [fn, tp]])
+
+
+def matriu_confusio_snn(model_snn, dataloader, threshold=0.5):
+    """
+    Calcula la matriu de confusió per al model SNN.
+
+    Format de la matriu:
+                    Predicció
+                  0          1
+    Real 0      TN         FP
+    Real 1      FN         TP
+    """
+
+    tn, fp, fn, tp = 0, 0, 0, 0
+
+    with torch.no_grad():
+        for xb, yb in dataloader:
+            for i in range(xb.size(0)):
+                prob = float(model_snn(xb[i]))
+                pred = int(prob >= threshold)
+                real = int(yb[i].item() >= 0.5)
+
+                if real == 0 and pred == 0:
+                    tn += 1
+                elif real == 0 and pred == 1:
+                    fp += 1
+                elif real == 1 and pred == 0:
+                    fn += 1
+                elif real == 1 and pred == 1:
+                    tp += 1
+
+    return np.array([[tn, fp],
+                     [fn, tp]])
+
+
+def mostrar_matriu_confusio(cm, titol):
+    """
+    Mostra una matriu de confusió amb matplotlib.
+    Classes:
+        0 = Fora del polígon
+        1 = Dins del polígon
+    """
+
+    fig, ax = plt.subplots(figsize=(5, 4))
+
+    im = ax.imshow(cm)
+
+    ax.set_title(titol)
+    ax.set_xlabel("Predicció")
+    ax.set_ylabel("Valor real")
+
+    ax.set_xticks([0, 1])
+    ax.set_yticks([0, 1])
+
+    ax.set_xticklabels(["0 - Fora", "1 - Dins"])
+    ax.set_yticklabels(["0 - Fora", "1 - Dins"])
+
+    # Escriure els valors dins de cada cel·la
+    for i in range(2):
+        for j in range(2):
+            ax.text(j, i, str(cm[i, j]),
+                    ha="center",
+                    va="center",
+                    fontsize=14)
+
+    fig.colorbar(im, ax=ax)
+    plt.tight_layout()
+    plt.show()
 #--------------------------------------------------------------------------------------------------------------------
 
 if __name__ == '__main__':
@@ -338,7 +445,7 @@ if __name__ == '__main__':
 
         except ValueError:
             print("El valor introduït no és un valor numèric.")"""
-    threshold = 0.5
+    """threshold = 0.5
     x_vals = np.arange(-40, 41, 1)
     y_vals = np.arange(-20, 21, 1)
 
@@ -372,12 +479,33 @@ if __name__ == '__main__':
             if ((p_mlp >= threshold) and (p_snn >= threshold+0.11)) or ((p_mlp < threshold) and (p_snn < threshold+0.11)):
                 Puntsiguals += 1
     print(f"Punts iguals (ANN i SNN dins): {Puntsiguals} de {len(x_vals)*len(y_vals)}, {Puntsiguals/(len(x_vals)*len(y_vals))*100:.2f}%")
+"""
+    
+    # ------------------------
+    # Matrius de confusió
+    # ------------------------
+
+    threshold_mlp = 0.5 
+    threshold_snn = 0.59
+
+    acc_snn,  ok_test,  n_test  = accuracy_snn(modelSNN, test_loader, threshold_snn)
+    acc_mlp,  ok_mlp,  n_mlp  = accuracy_mlp(model, test_loader, threshold_mlp)
+
+    print(f"\nSNN Accuracy: {acc_snn:.2f}% ({ok_test}/{n_test} correctes)")
+    print(f"MLP Accuracy: {acc_mlp:.2f}% ({ok_mlp}/{n_mlp} correctes)")
+
+    # Matrius de confusió
+    cm_mlp = matriu_confusio_mlp(model, test_loader, threshold_mlp)
+    cm_snn = matriu_confusio_snn(modelSNN, test_loader, threshold_snn)
+
+    mostrar_matriu_confusio(cm_mlp, "Matriu de confusió - ANN / MLP")
+    mostrar_matriu_confusio(cm_snn, "Matriu de confusió - SNN")
 
 # ------------------------
 # Plot
 # ------------------------
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharex=True, sharey=True)
+"""    fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharex=True, sharey=True)
 
 # ANN plot
     axes[0].scatter(mlp_x, mlp_y, c='green', s=8)
@@ -398,4 +526,4 @@ if __name__ == '__main__':
     axes[1].set_aspect('equal')
     axes[1].grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.show()
+    plt.show()"""

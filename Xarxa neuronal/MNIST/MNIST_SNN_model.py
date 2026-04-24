@@ -4,6 +4,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader, random_split
 from PIL import Image
 from MNIST_Train_model import ClassificadorCNN
+import matplotlib.pyplot as plt
 
 
 # ---------- Càrrega del dataset de validació (per calibrar els màxims) ----------
@@ -38,7 +39,7 @@ def log_print(message):
 
 def computa_activacio_maxima(model, dataloader, percentil=95.5):
     """
-    Recorre el dataset i calcula el percentil 90 de les activacions de cada capa ReLU.
+    Recorre el dataset i calcula el percentil 95.5 de les activacions de cada capa ReLU.
     Aquest percentil es fa servir com a factor de normalització per convertir els pesos del CNN a taxes de dispar en la SNN.
     """
     model.eval()
@@ -89,7 +90,7 @@ def computa_activacio_maxima(model, dataloader, percentil=95.5):
 
 
 a1_max, a2_max, a3_max, a4_max = computa_activacio_maxima(model, val_loader)
-log_print(f"Percentil 90 activacions — conv1: {a1_max:.4f} | conv2: {a2_max:.4f} | fc1: {a3_max:.4f} | fc2: {a4_max:.4f}")
+log_print(f"Percentil 95.5 activacions — conv1: {a1_max:.4f} | conv2: {a2_max:.4f} | fc1: {a3_max:.4f} | fc2: {a4_max:.4f}")
 
 
 # ---------- Model SNN ----------
@@ -264,6 +265,143 @@ def avalua_models(model_cnn, model_snn, dataloader):
  
     return cnn_acc, snn_acc
 
+# ---------- Matriu de confusió per a la CNN ----------
+
+def matriu_confusio_cnn_mnist(model_cnn, dataloader):
+    """
+    Calcula la matriu de confusió de la CNN/ANN per al dataset MNIST.
+
+    Files    = classe real
+    Columnes = classe predita
+    """
+
+    num_classes = 10
+    cm = torch.zeros(num_classes, num_classes, dtype=torch.int64)
+
+    total = 0
+    correctes = 0
+
+    model_cnn.eval()
+
+    with torch.no_grad():
+        for xb, yb in dataloader:
+            xb, yb = xb.to(device), yb.to(device)
+
+            logits = model_cnn(xb)                  # [batch, 10]
+            prediccions = logits.argmax(dim=1)      # classe amb valor més alt
+
+            for real, pred in zip(yb, prediccions):
+                real = int(real.item())
+                pred = int(pred.item())
+
+                cm[real, pred] += 1
+
+                if real == pred:
+                    correctes += 1
+
+                total += 1
+
+    accuracy = correctes / total * 100 if total > 0 else 0
+
+    print(f"\n--- Matriu de confusió CNN / ANN ---")
+    print(cm.numpy())
+    print(f"\nAccuracy CNN / ANN: {accuracy:.2f}% ({correctes}/{total} correctes)")
+
+    return cm
+
+# ---------- Matriu de confusió per a la SNN ----------
+
+def matriu_confusio_snn_mnist(model_snn, dataloader):
+    """
+    Calcula la matriu de confusió de la SNN per al dataset MNIST.
+
+    Files    = classe real
+    Columnes = classe predita
+
+    Exemple:
+        cm[3, 8] indica quantes imatges que realment eren un 3
+        han estat classificades com un 8.
+    """
+
+    num_classes = 10
+    cm = torch.zeros(num_classes, num_classes, dtype=torch.int64)
+
+    total = 0
+    correctes = 0
+    casos_sense_dispars = 0
+
+    with torch.no_grad():
+        for i, (xb, yb) in enumerate(dataloader):
+            xb, yb = xb.to(device), yb.to(device)
+
+            # La SNN avalua imatge per imatge
+            for j in range(xb.size(0)):
+                imatge = xb[j].unsqueeze(0)      # [1, 1, 28, 28]
+                etiqueta_real = int(yb[j].item())
+
+                taxes = model_snn(imatge)        # [10]
+                etiqueta_predita = int(taxes.argmax().item())
+
+                cm[etiqueta_real, etiqueta_predita] += 1
+
+                if etiqueta_real == etiqueta_predita:
+                    correctes += 1
+
+                if taxes[etiqueta_predita].item() == 0:
+                    casos_sense_dispars += 1
+
+                total += 1
+
+            if (i + 1) % 10 == 0:
+                print(f"  Calculant matriu de confusió SNN... {total} imatges processades", end="\r")
+
+    accuracy = correctes / total * 100 if total > 0 else 0
+
+    print(f"\n\n--- Matriu de confusió SNN ---")
+    print(cm.numpy())
+    print(f"\nAccuracy SNN: {accuracy:.2f}% ({correctes}/{total} correctes)")
+    print(f"Casos sense dispars a la classe predita: {casos_sense_dispars} ({casos_sense_dispars / total * 100:.2f}%)")
+
+    return cm
+
+
+def mostrar_matriu_confusio_mnist(cm, titol="Matriu de confusió - SNN"):
+    """
+    Mostra gràficament la matriu de confusió per a MNIST.
+    """
+
+    cm_np = cm.cpu().numpy() if isinstance(cm, torch.Tensor) else cm
+
+    fig, ax = plt.subplots(figsize=(8, 7))
+
+    im = ax.imshow(cm_np)
+
+    ax.set_title(titol)
+    ax.set_xlabel("Classe predita")
+    ax.set_ylabel("Classe real")
+
+    ax.set_xticks(range(10))
+    ax.set_yticks(range(10))
+
+    ax.set_xticklabels([str(i) for i in range(10)])
+    ax.set_yticklabels([str(i) for i in range(10)])
+
+    # Escriure els valors dins de cada cel·la
+    for i in range(10):
+        for j in range(10):
+            ax.text(
+                j,
+                i,
+                str(cm_np[i, j]),
+                ha="center",
+                va="center",
+                fontsize=8
+            )
+
+    fig.colorbar(im, ax=ax)
+    plt.tight_layout()
+    plt.show()
+
 # ---------- Loop interactiu ----------
 
 if __name__ == '__main__':
@@ -273,7 +411,11 @@ if __name__ == '__main__':
 
     modelSNN = SNN_CNN(model, a1_max, a2_max, a3_max, a4_max)
 
-    while True:
+    cm_snn = matriu_confusio_snn_mnist(modelSNN, test_loader)
+    mostrar_matriu_confusio_mnist(cm_snn, "Matriu de confusió - SNN MNIST")
+    cm_cnn = matriu_confusio_cnn_mnist(model, test_loader)
+    mostrar_matriu_confusio_mnist(cm_cnn, "Matriu de confusió - CNN / ANN")
+    """while True:
         try:
             ruta = input("\nNom del fitxer d'imatge (o '/' per sortir): ").strip()
 
@@ -303,4 +445,4 @@ if __name__ == '__main__':
         except FileNotFoundError:
             print(f"No s'ha trobat el fitxer '{ruta}'. Comprova la ruta i torna-ho a intentar.") # type: ignore
         except ValueError as e:
-            print(f"Error: {e}")
+            print(f"Error: {e}")"""
