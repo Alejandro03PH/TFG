@@ -43,6 +43,15 @@ neuronals de polsos (SNNs).}
 \definecolor{torchcolor}{HTML}{C45A00}  % torch / PyTorch
 \definecolor{varcolor}{HTML}{005F99}    % variables
 \definecolor{classfunction}{HTML}{B8860B} % groc fosc llegible per a classes i funcions definides per l'usuari
+\definecolor{dadesblau}{RGB}{0,80,180}
+\definecolor{dadesvermell}{RGB}{190,40,40}
+\definecolor{dadeslila}{RGB}{120,60,180}
+
+\newcommand{\dadesfila}[3]{%
+	\textcolor{black}{#1}\textcolor{black}{,}%
+	\textcolor{dadesvermell}{#2}\textcolor{black}{,}%
+	\textcolor{dadeslila}{#3}%
+}
 
 \lstdefinestyle{codi}{
     basicstyle=\ttfamily\small,
@@ -212,15 +221,16 @@ Finally, the project analyses the possible economic, environmental, and social i
 {
 	\let\cleardoublepage\clearpage
 	\listoffigures
+	\lstlistoflistings
+
+
+	\section{Prefaci}
+	Aquest treball neix del meu interès per la intel·ligència artificial i, alhora, per l’electrònica i el disseny de hardware. Durant els darrers anys, la IA ha adquirit una importància creixent tant en l’àmbit tecnològic com en l’industrial, i s’ha convertit en una eina cada vegada més present en aplicacions de tota mena. Aquest progrés però, també ha posat de manifest alguns reptes importants, especialment relacionats amb l’elevat consum energètic dels models actuals, la necessitat de grans infraestructures de càlcul i l’impacte ambiental associat, incloent-hi no només l’electricitat consumida, sinó també l’aigua necessària per a la refrigeració d'aquests centres de dades.
+
+	Per aquest les xarxes neuronals de polsos, o Spiking Neural Networks (SNNs), m’han semblat una línia d’estudi especialment interessant perquè connecten la intel·ligència artificial i el hardware. A diferència de les xarxes neuronals artificials convencionals, les SNNs treballen mitjançant polsos discrets en el temps i modelitzen el comportament de les neurones d’una manera més propera a un circuit electrònic, amb variables com el potencial de membrana, el llindar de dispar, la fuita o la integració temporal del senyal. Això fa que el seu estudi no sigui només un problema de programació o d’aprenentatge automàtic, sinó també una aproximació a una arquitectura computacional amb una base física i electrònica.
+
+	Així doncs, aquest projecte m’ha permès apropar-me al món de la intel·ligència artificial des d’una perspectiva que encaixa amb el meu interès pel disseny de sistemes electrònics. L’objectiu d'aquest no és plantejar les SNNs com una substitució immediata de les xarxes neuronals tradicionals, sinó estudiar-ne els fonaments, entendre el seu funcionament i comprovar fins a quin punt poden reproduir el comportament d’una ANN. D’aquesta manera, el treball combina una part teòrica amb una part pràctica i serveix com a punt de contacte entre el software d’intel·ligència artificial i les possibles implementacions neuromòrfiques en hardware.
 }
-
-\section{Prefaci}
-Aquest treball neix del meu interès per la intel·ligència artificial i, alhora, per l’electrònica i el disseny de hardware. Durant els darrers anys, la IA ha adquirit una importància creixent tant en l’àmbit tecnològic com en l’industrial, i s’ha convertit en una eina cada vegada més present en aplicacions de tota mena. Aquest progrés però, també ha posat de manifest alguns reptes importants, especialment relacionats amb l’elevat consum energètic dels models actuals, la necessitat de grans infraestructures de càlcul i l’impacte ambiental associat, incloent-hi no només l’electricitat consumida, sinó també l’aigua necessària per a la refrigeració d'aquests centres de dades.
-
-Per aquest les xarxes neuronals de polsos, o Spiking Neural Networks (SNNs), m’han semblat una línia d’estudi especialment interessant perquè connecten la intel·ligència artificial i el hardware. A diferència de les xarxes neuronals artificials convencionals, les SNNs treballen mitjançant polsos discrets en el temps i modelitzen el comportament de les neurones d’una manera més propera a un circuit electrònic, amb variables com el potencial de membrana, el llindar de dispar, la fuita o la integració temporal del senyal. Això fa que el seu estudi no sigui només un problema de programació o d’aprenentatge automàtic, sinó també una aproximació a una arquitectura computacional amb una base física i electrònica.
-
-Així doncs, aquest projecte m’ha permès apropar-me al món de la intel·ligència artificial des d’una perspectiva que encaixa amb el meu interès pel disseny de sistemes electrònics. L’objectiu d'aquest no és plantejar les SNNs com una substitució immediata de les xarxes neuronals tradicionals, sinó estudiar-ne els fonaments, entendre el seu funcionament i comprovar fins a quin punt poden reproduir el comportament d’una ANN. D’aquesta manera, el treball combina una part teòrica amb una part pràctica i serveix com a punt de contacte entre el software d’intel·ligència artificial i les possibles implementacions neuromòrfiques en hardware.
-
 %----------------------------------------------------------------------------------------------
 %----------------------------------------------------------------------------------------------
 \section{Introducció}\label{introducció}
@@ -684,7 +694,7 @@ Epoca 01   train loss: 0.2143   val loss: 0.1987
 Epoca 02   train loss: 0.1761   val loss: 0.1542
 Epoca 03   train loss: 0.1328   val loss: 0.1194
 ...
-Test Loss: 0.0412, Percentatge d'encert: 94.37 %
+Test Loss: 0.1643, Percentatge d'encert: 93.10 %
 \end{lstlisting}
 
 Un cop finalitzat l'entrenament, el model es guarda en un fitxer anomenat $\texttt{Pesos\_classificador.pth}$, que conté els pesos i biaixos apresos, i es procedeix a avaluar el rendiment del model en el subconjunt de test, obtenint una mètrica d'exactitud que serveix com a referència per a la posterior comparació amb la SNN convertida.
@@ -734,7 +744,8 @@ El primer element important de la conversió és la codificació de les entrades
 \end{lstlisting}
 
 El segon element important que apareix és la normalització dels pesos i dels biaixos de la ANN abans d'introduir-los a la SNN. En el codi, abans de crear la xarxa de polsos, es calcula l'activació màxima observada a la capa oculta i a la capa de sortida del model original sobre el conjunt de validació. Aquests valors, anomenats $\texttt{a1\_max}$ i $\texttt{a2\_max}$, s'utilitzen com a factors de normalització per dividir, respectivament, els pesos i els biaixos de la primera capa i els de la capa de sortida. Això permet reduir l'amplitud efectiva dels corrents injectats a les neurones de polsos i evitar que el potencial de membrana saturi massa ràpidament. En altres paraules, aquesta normalització serveix per adaptar l'escala d'activació de la ANN a l'escala de la SNN, on les neurones només poden emetre polsos quan superen un llindar fix. Si no es dugués a terme aquesta etapa, seria probable que algunes neurones disparessin de manera gairebé contínua o, a l'inrevés, que no arribessin mai a superar el llindar, degradant significativament el comportament del model convertit.
-Un cop codificades les entrades i normalitzats els paràmetres, la dinàmica interna de la SNN es construeix amb dues capes de neurones de polsos. La primera rep els polsos d'entrada i calcula un corrent sinàptic a partir del producte entre els polsos i la matriu de pesos $W_1$, sumant-hi el vector de biaix $b_1$. El potencial de membrana de cada neurona es va actualitzant en el temps segons una dinàmica amb fuga, modelada per un factor \texttt{decay = 0,9}. Quan aquest potencial supera el llindar fixat a \texttt{threshold = 1,0}, la neurona emet un pols i el potencial es redueix restant aquest llindar (0,0 + biaix), implementant així un mecanisme de reset. La capa de sortida funciona de la mateixa manera, rebent com a entrada els polsos de la capa oculta i acumulant-los temporalment fins que genera els polsos finals de sortida. La resposta del model no és una probabilitat contínua com en el cas de la ANN, sinó la proporció de polsos emesos per la neurona de sortida al llarg de l'interval de temps, és a dir, $\texttt{dispars\_totals / t}$. En l'avaluació final, la implementació utilitza una finestra de \texttt{200} passos temporals. Al \autoref{lst:Normalitzacio_pesos} es pot veure un fragment del codi on es realitza aquesta normalització dels pesos i biaixos a les diferents capes de la SNN.
+Un cop codificades les entrades i normalitzats els paràmetres, la dinàmica interna de la SNN es construeix amb dues capes de neurones de polsos. La primera rep els polsos d'entrada i calcula un corrent sinàptic a partir del producte entre els polsos i la matriu de pesos $W_1$, sumant-hi el vector de biaix $b_1$. El potencial de membrana de cada neurona es va actualitzant en el temps segons una dinàmica amb fuga, modelada per un factor \texttt{decay = 0,9}. Quan aquest potencial supera el llindar fixat a \texttt{threshold = 1,0}, la neurona emet un pols i el potencial es redueix restant aquest llindar (0,0 + biaix), implementant així un mecanisme de reset. La capa de sortida funciona de la mateixa manera, rebent com a entrada els polsos de la capa oculta i acumulant-los temporalment fins que genera els polsos finals de sortida. La resposta del model no és una probabilitat contínua com en el cas de la ANN, sinó la proporció de polsos emesos per la neurona de sortida al llarg de l'interval de temps, és a dir, $\texttt{dispars\_totals / t}$. En l'avaluació final, la implementació utilitza una finestra de \texttt{200} passos temporals. Al \autoref{lst:Normalitzacio_pesos} es pot veure un fragment del codi on es realitza aquesta normalització dels pesos i biaixos a les diferents capes de la SNN. La configuració completa dels hiperparàmetres es recull a l'\hyperref[annex:hiperparametres]{Annex d'hiperparàmetres dels models}.
+
 
 \vspace{3mm}
 \begin{lstlisting}[style=codi, caption={Fragment de la implementacio de la classe SNN utilitzada i conversió de pesos i biaixos de l'ANN a l'SNN}, captionpos = b, label={lst:Normalitzacio_pesos}, firstnumber=57]
@@ -758,18 +769,18 @@ Per avaluar la SNN convertida, el codi inclou una funció específica d'\textit{
 Aquesta mena de conversió acostuma a preservar raonablement bé el comportament de la xarxa en el nucli principal de cada regió de classificació, és a dir, en aquelles zones del pla on la ANN original produeix activacions clarament per sobre o clarament per sota del llindar. En aquestes regions, la separació entre classes és prou robusta perquè les fluctuacions introduïdes pel \textit{rate encoding} i per la discretització temporal tinguin un efecte limitat. Per contra, és esperable que les pèrdues de precisió apareguin sobretot a prop de la frontera de decisió, on petits canvis en la taxa de dispar, en el nombre de passos temporals simulats o en el llindar final poden alterar la classe assignada al punt. Aquesta degradació és coherent amb el fet que la SNN implementada utilitza una codificació estocàstica i una finestra temporal finita. La sortida d'aquesta és una aproximació mitjana al comportament de la ANN, però no una reproducció exacta punt a punt, especialment en les zones més ambigües del problema. No obstant això, en la pràctica, aquesta aproximació pot ser suficient per a moltes aplicacions, especialment aquelles on la robustesa i l'eficiència energètica de les SNNs compensen les petites pèrdues de precisió en les zones de frontera. Cal remarcar que, per utilitats on la precisió és crítica, és habitual aplicar després de la conversió un procés de reentrenament o ajustament (\textit{fine-tuning}) de la SNN, que permet refinar els pesos i biaixos dins del marc temporal de la SNN per recuperar part de la precisió perduda durant la conversió inicial. En aquest cas, però, s'ha optat per no realitzar aquest pas addicional, per tal de mantenir el focus en la comparativa directa entre el model ANN original i la SNN convertida sense entrenament addicional.
 %----------------------------------------------------------------------------------------------
 \subsection{Resultats i comparativa de rendiment}
-Amb els dos models entrenats, s'avaluen ambdós sobre el conjunt de dades de validació amb l'objectiu d'obtenir una mesura del rendiment el menys esbiaixada possible. S'observa que la ANN obté un percentatge d'encert del 93,0\%, mentre que la SNN convertida assoleix un 90,1\%. A la \autoref{fig:confusion_matrix_ann} i a la \autoref{fig:confusion_matrix_snn} podem observar una matriu de confusió dels models de ANN i SNN respectivament que il·lustren els resultats d'aquesta evaluació, i mostren el tipus d'errors que cometen aquests.
+Amb els dos models entrenats, s'avaluen ambdós sobre el conjunt de dades de validació amb l'objectiu d'obtenir una mesura del rendiment el menys esbiaixada possible. S'observa que la ANN obté un percentatge d'encert del 93,0\%, mentre que la SNN convertida assoleix un 90,1\%. A la \autoref{fig:confusion_matrix_ann_polygon} i a la \autoref{fig:confusion_matrix_snn_polygon} podem observar una matriu de confusió dels models de ANN i SNN respectivament que il·lustren els resultats d'aquesta evaluació, i mostren el tipus d'errors que cometen aquests.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.52\textwidth]{Confusion_Matrix_MLP_Polygon.png}
 	\caption{Matriu de confusió del model ANN per la classificació de punts.}
-	\label{fig:confusion_matrix_ann}
+	\label{fig:confusion_matrix_ann_polygon}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.52\textwidth]{Confusion_Matrix_SNN_Polygon.png}
 	\caption{Matriu de confusió del model SNN per la classificació de punts.}
-	\label{fig:confusion_matrix_snn}
+	\label{fig:confusion_matrix_snn_polygon}
 \end{figure}
 
 Cal remarcar però, que la precisió de la SNN varia en funció del període de temps en que s'evalui, sent més precisa com més temps se li doni per evaluar l'entrada. Per al nostre cas, i com un ordinador no entén de temps, sinó de cicles de càlcul, hem fet servir 200 cicles. A més, la precisió de la SNN també depén d'un factor pseudo-aleatori, doncs la entrada que li donem no és una entrada real, sinó una transformació d'un punt a un encoding de polsos realitzats amb una funció aleatoria, el que implica que la sortida d'aquest model pot variar lleugerament entre execucions, afectant a la seva precisió. Tot i això la conversió ANN-SNN introdueix una pèrdua de rendiment relativament reduïda, d'aproximadament 2,9 punts percentuals, amb la principal font d’augment de l’error en la SNN sent una tendència més optimista en la classificació dels punts interiors, assignant com a interiors un nombre més elevat de punts que haurien de ser classificats com a exteriors, mentre que per el cas de la classificació dels punts realment interiors, els dos models es comporten identicament.
@@ -793,7 +804,7 @@ En aquest treball, MNIST s'ha fet servir per representar un cas d'ús més reali
 \subsection{Preparació de dades i entrenament de la ANN}
 Es comença la part pràctica carregant el dataset MNIST mitjançant les eines que ofereix la llibreria PyTorch, que inclou funcions específiques per descarregar i preparar aquest conjunt de dades. A diferència del cas d'estudi anterior, on haviem de normalitzar les dades manualment, en aquest cas, on les imatges són matrius de pixels en escales de grisos, on el valor de cada pixel ve representat com una escala de 0 a 1, sent el 0 el negre i el 1 el blanc, les dades ja es troben normalitzades de manera natural, i per tant no és necessari aplicar cap tipus de normalització addicional. Gràcies a la llibreria PyTorch, el dataset es carrega directament en format de tensors, i es divideix en subconjunts d'entrenament i de prova de forma automàtica, amb 60.000 imatges per a l'entrenament i 10.000 per a la prova, tal com es distribueix originalment.
 
-Pel que fa a l'arquitectura del classificador, en aquest cas no s'ha utilitzat un perceptró multicapa simple (MLP) com en l'experiment anterior, sinó una xarxa neuronal convolucional. Aquesta elecció és fa degut a que les CNN estan especialment dissenyades per tractar dades amb estructura espacial, com és el cas de les imatges, i al tractar-se d'una extensió de la arquitectura MLP, on les dades es veuen processades a través de capes convolucionals abans d'entrar en la xarxa neuronal, la seva utilització no suposa cap desavantatge per a la conversió, provocant només una millora del rendiment de la ANN, i per tant una millor aproximació a l'hora de calcular els pesos de les neurones, els quals s'utilitzaran a la SNN. El model implementat, anomenat ClassificadorCNN, està format per dos blocs convolucionals seguits d'un classificador totalment connectat. El primer bloc aplica una convolució de 1 a 32 canals amb nucli 3x3, seguida d'una operació de max pooling que redueix la resolució espacial de 28x28 a 14x14, i d'una activació ReLU, escollida per els motius explicats a la primera part pràctica. El segon bloc aplica una segona convolució de 32 a 64 canals, novament seguida de max pooling, reduint la mida a 7x7, i d'una nova activació ReLU. Finalment, la informació s'aplana i es processa mitjançant una capa lineal de 3136 (7x7x64) a 128 neurones, una ReLU intermitja, i una capa de sortida de 128 a 10 neurones, corresponents a les deu classes possibles del dataset, és a dir, els dígits del 0 al 9. L'estructura d'aquest model es pot veure de manera més detallada al \autoref{lst:ClassificadorCNN}.
+Pel que fa a l'arquitectura del classificador, en aquest cas no s'ha utilitzat un perceptró multicapa simple (MLP) com en l'experiment anterior, sinó una xarxa neuronal convolucional. Aquesta elecció és fa degut a que les CNN estan especialment dissenyades per tractar dades amb estructura espacial, com és el cas de les imatges, i al tractar-se d'una extensió de la arquitectura MLP, on les dades es veuen processades a través de capes convolucionals abans d'entrar en la xarxa neuronal, la seva utilització no suposa cap desavantatge per a la conversió, provocant només una millora del rendiment de la ANN, i per tant una millor aproximació a l'hora de calcular els pesos de les neurones, els quals s'utilitzaran a la SNN. El model implementat, anomenat ClassificadorCNN, està format per dos blocs convolucionals seguits d'un classificador totalment connectat. El primer bloc aplica una convolució de 1 a 32 canals amb nucli 3x3, seguida d'una operació de max pooling que redueix la resolució espacial de 28x28 a 14x14, i d'una activació ReLU, escollida per els motius explicats a la primera part pràctica. El segon bloc aplica una segona convolució de 32 a 64 canals, novament seguida de max pooling, reduint la mida a 7x7, i d'una nova activació ReLU. Finalment, la informació s'aplana i es processa mitjançant una capa lineal de 3136 (7x7x64) a 128 neurones, una ReLU intermitja, i una capa de sortida de 128 a 10 neurones, corresponents a les deu classes possibles del dataset, és a dir, els dígits del 0 al 9. L'estructura d'aquest model es pot veure de manera més detallada al \autoref{lst:ClassificadorCNN}. La configuració completa dels hiperparàmetres es recull a l'\hyperref[annex:hiperparametres]{Annex d'hiperparàmetres dels models}.
 
 \vspace{3mm}
 \begin{lstlisting}[style=codi, caption={Arquitectura del model ClassificadorCNN}, captionpos=b, label={lst:ClassificadorCNN}, firstnumber=12]
@@ -837,18 +848,18 @@ Pel que fa a la configuració temporal, la SNN funciona durant una finestra de 2
 %----------------------------------------------------------------------------------------------
 
 \subsection{Resultats i comparativa entre ANN i SNN}
-Una vegada completada la conversió del model convolucional a una xarxa neuronal de polsos, s'ha procedit a comparar el rendiment dels dos models sobre el conjunt de prova de MNIST. Al evaluar-la en front del subconjunt de dades de prova, la CNN assoleix una exactitud del 99,06\%, mentre que la SNN convertida arriba al 93,19\%. Això suposa una pèrdua de precisió apreciable respecte al model original, però alhora mostra que la conversió conserva una part molt important de la capacitat de classificació de la xarxa artificial. Aquesta caiguda de rendiment és, en certa manera, esperable. A diferència de la CNN, que treballa directament amb activacions contínues, la SNN ha de representar la informació mitjançant polsos discrets distribuïts en el temps. Aquesta aproximació introdueix una simplificació del comportament del model original i, per tant, una certa pèrdua de fidelitat en la classificació final. Tot i això, els resultats obtinguts continuen sent prou bons per considerar que la xarxa de polsos manté un comportament funcional útil i que és capaç de classificar les imatges de manera relativament fiable.Per poder analitzar amb més detall el rendiment de cada model, es generen les matrius de confusió corresponents a la CNN i a la SNN, com a l'estudi anterior, il·lustrats a la \autoref{fig:confusion_matrix_cnn} i a la \autoref{fig:confusion_matrix_snn} respectivament.
+Una vegada completada la conversió del model convolucional a una xarxa neuronal de polsos, s'ha procedit a comparar el rendiment dels dos models sobre el conjunt de prova de MNIST. Al evaluar-la en front del subconjunt de dades de prova, la CNN assoleix una exactitud del 99,06\%, mentre que la SNN convertida arriba al 93,19\%. Això suposa una pèrdua de precisió apreciable respecte al model original, però alhora mostra que la conversió conserva una part molt important de la capacitat de classificació de la xarxa artificial. Aquesta caiguda de rendiment és, en certa manera, esperable. A diferència de la CNN, que treballa directament amb activacions contínues, la SNN ha de representar la informació mitjançant polsos discrets distribuïts en el temps. Aquesta aproximació introdueix una simplificació del comportament del model original i, per tant, una certa pèrdua de fidelitat en la classificació final. Tot i això, els resultats obtinguts continuen sent prou bons per considerar que la xarxa de polsos manté un comportament funcional útil i que és capaç de classificar les imatges de manera relativament fiable.Per poder analitzar amb més detall el rendiment de cada model, es generen les matrius de confusió corresponents a la CNN i a la SNN, com a l'estudi anterior, il·lustrats a la \autoref{fig:confusion_matrix_cnn_mnist} i a la \autoref{fig:confusion_matrix_snn_mnist} respectivament.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.65\textwidth]{Confusion_Matrix_CNN_MNIST.png}
 	\caption{Matriu de confusió del model CNN per la classificació de dígits manuscrits.}
-	\label{fig:confusion_matrix_cnn}
+	\label{fig:confusion_matrix_cnn_mnist}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.65\textwidth]{Confusion_Matrix_SNN_MNIST.png}
 	\caption{Matriu de confusió del model SNN per la classificació de dígits manuscrits.}
-	\label{fig:confusion_matrix_snn}
+	\label{fig:confusion_matrix_snn_mnist}
 \end{figure}
 Aquestes matrius mostren que, mentre que la CNN cometeix molt pocs errors i tendeix a confondre classes específiques de manera molt limitada, la SNN presenta una major quantitat d'errors, especialment entre classes que tenen formes similars, com el 0 i el 9, el 4 i el 9, o el 8 i el 9, i quan la resposta temporal és dèbil o ambigua, la classe 0 tendeix a acumular més activitat relativa que la resta, donant com a resultat més errors on la predicció és 0 quan la classe real no ho era per a tots els digits. Aquesta tendència es correspón amb la pèrdua de precisió introduïda per la conversió, que afecta especialment a les zones de frontera entre classes, on les activacions de la CNN són més propenses a ser interpretades de manera errònia per la SNN a causa de la seva codificació per taxa i del recompte finit de polsos.
 
@@ -882,7 +893,9 @@ Per a un pilot industrial senzill basat en una ANN entrenada, la seva conversió
 
 Si, a més, es volgués portar aquesta idea a hardware dedicat, el cost augmentaria, però per a una xarxa petita com la del treball continuaria sent abordable a nivell de prototip. Una primera implementació en FPGA es podria fer amb plaques de desenvolupament comercials de baix o mitjà cost, amb preus que poden variar des dels 129 als 1.678 €. En un prototip petit, el cost del maquinari no seria el principal problema, sinó les hores de disseny HDL, verificació, síntesi, proves i integració. Per això, per a una implementació experimental d'aquest tipus, és raonable estimar un pressupost total d'entre 7.000 € i 10.000 € si es fa servir FPGA i una xarxa de mida limitada.
 
-Des del punt de vista energètic, l'interès econòmic de les SNNs rau en el fet que el càlcul és escàs i basat en la pròpia estructura del circuit, el que li proporciona una notable millora en eficiència per tasques concretes. Intel afirma que el maquinari neuromòrfic Loihi 2 ha demostrat guanys d'eficiència d'ordre de magnitud en càrregues petites i de tipus edge, i IBM va reportar que el seu xip TrueNorth implementava 1 milió de neurones amb un consum d'uns 65 mW. Això mostra que, almenys en problemes adequats i en hardware específic, la idea neuromòrfica pot ser molt més eficient que l'execució convencional. Això dona peu a pensar que aquest tipus d'arquitectura podria ser interessant per entorns on el consum energètic és un factor crític, com ara dispositius mòbils, sistemes embeguts o aplicacions de computació a l'edge. En aquests casos, els guanys d'eficiència podrien justificar la inversió en desenvolupament i integració de SNNs, especialment si es tracta de tasques específiques on les SNNs poden excel·lir. Tanmateix, per a aplicacions de gran escala o de propòsit general, com els grans models de llenguatge, el balanç econòmic és més complex, doncs no s'ha implementat mai aquest tipus d'arquitectura per aquest pròposit. Tot i així podem fer una simulació dels possibles estalvis anuals en energia que aquest tipus de tecnologia podria aportar si s'apliqués per aquest propòsit.
+Tot i que les SNNs presenten un potencial d’eficiència energètica superior a les ANNs convencionals, aquest avantatge depèn fortament de la seva execució en hardware neuromòrfic o en arquitectures capaces d’explotar el processament event-driven. En aquest treball, les SNNs s’han simulat en software sobre hardware convencional, de manera que una comparació directa del consum energètic amb una ANN no seria representativa. Per aquest motiu, l’anàlisi energètic només es pot tractar de manera purament teòrica i qualitativa, deixant la mesura experimental del consum en hardware neuromòrfic com a línia de treball futura. Així doncs, fem una anàlisi teòrica del potencial d’estalvi energètic que les SNNs podrien aportar en comparació amb les ANNs, basant-nos en dades i estimacions disponibles sobre el consum energètic de models d’IA i de hardware neuromòrfic.
+
+L'interès econòmic de les SNNs rau en el fet que el càlcul és escàs i basat en la pròpia estructura del circuit, el que li proporciona una notable millora en eficiència per tasques concretes. Intel afirma que el maquinari neuromòrfic Loihi 2 ha demostrat guanys d'eficiència d'ordre de magnitud en càrregues petites i de tipus edge, i IBM va reportar que el seu xip TrueNorth implementava 1 milió de neurones amb un consum d'uns 65 mW. Això mostra que, almenys en problemes adequats i en hardware específic, la idea neuromòrfica pot ser molt més eficient que l'execució convencional. Això dona peu a pensar que aquest tipus d'arquitectura podria ser interessant per entorns on el consum energètic és un factor crític, com ara dispositius mòbils, sistemes embeguts o aplicacions de computació a l'edge. En aquests casos, els guanys d'eficiència podrien justificar la inversió en desenvolupament i integració de SNNs, especialment si es tracta de tasques específiques on les SNNs poden excel·lir. Tanmateix, per a aplicacions de gran escala o de propòsit general, com els grans models de llenguatge, el balanç econòmic és més complex, doncs no s'ha implementat mai aquest tipus d'arquitectura per aquest pròposit. Tot i així podem fer una simulació dels possibles estalvis anuals en energia que aquest tipus de tecnologia podria aportar si s'apliqués per aquest propòsit.
 
 A dia d'avui, els LLMs massius com ChatGPT, Gemini o Claude consumeixen quantitats enormes d'energia, i tot i que no hi ha dades públiques detallades sobre el seu consum energètic, es poden fer estimacions basades en les dades disponibles sobre el nombre de consultes i el consum per consulta. Per al cas de ChatGPT, OpenAI va indicar que al juliol de 2025 es processaven uns 18.000 milions de missatges per setmana \cite{openai_chatgpt_usage_2025}, i Sam Altman, el seu CEO, va afirmar que una consulta mitjana consumia aproximadament 0,34 Wh. Si es combina aquesta magnitud amb el preu mitjà final de l'electricitat al mercat espanyol el 2025, 83,45 €/MWh (és a dir, 0,08345 €/kWh), el consum anual quedaria entorn de 318 GWh/any, amb un cost elèctric aproximat de 26,6 milions d'euros anuals. En el cas de Gemini, Google ha publicat una estimació energètica per prompt de text en 0,24 Wh \cite{google_gemini_energy_2025}. També s'ha informat que l'aplicació Gemini havia superat els 750 milions d'usuaris mensuals. Com que Google no publica el nombre total de consultes/dia per a la seva app, una forma prudent de calcular-ne l'ordre de magnitud és assumir 100 prompts per usuari i mes. Amb aquesta hipòtesi, el consum anual seria d'uns 216 GWh/any, i el cost elèctric aproximat, aplicant el mateix preu de referència, d'uns 18,0 milions d'euros anuals. A partir d'aquí, es pot fer una estimació de l'estalvi potencial que podria aportar una arquitectura més eficient inspirada en SNNs. En un escenari conservador d'un 20\% d'estalvi energètic, ChatGPT podria reduir aproximadament 5,3 milions d'€/any, i Gemini 3,6 milions d'€/any. En un horitzó de 5 anys, això equivaldria aproximadament a 26,6 milions i 18,0 milions, respectivament. Si es considera un escenari més ambiciós del 50\% d'estalvi, els valors pujarien a 13,3 milions d'€/any per a ChatGPT, 9,0 milions d'€/any per a Gemini. Sumant els tres serveis sota aquestes hipòtesis, el cost energètic anual agregat seria de l'ordre de 45,2 milions d'euros, i un estalvi del 20\% representaria uns 8,9 milions d'euros anuals, mentre que un del 50\% s'enfilaria fins als 22,3 milions anuals. Cal remarcar però, que tot i que millores del 50\% en l'eficiència han demostrat ser possibles per a tasques determinades, no se sap si es podrien aconseguir en el cas de LLMs massius, i menys encara si es volgués mantenir la mateixa precisió i capacitat de resposta. Per això, aquestes xifres s'han de prendre com a estimacions molt aproximades, però que serveixen per posar en perspectiva el potencial econòmic d'aquesta arquitectura, i per justificar la inversió en el desenvolupament d'SNNs.
 
@@ -931,6 +944,385 @@ Finalment, vull donar les gràcies a la meva família i al meu entorn proper pel
 \printbibliography[heading=bibintoc, title={Bibliografia}]
 
 %----------------------------------------------------------------------------------------------
+%------------------------------------------ANEXE-----------------------------------------------
+% === PÁGINA DE "ANEXO" ===
+\newpage
+\thispagestyle{empty} % Quita encabezado/pie de página
+\vspace*{\fill}
+\begin{center}
+	{\Huge\bfseries Annex}
+\end{center}
+\vspace*{\fill}
+\newpage
+
+% === ANEXOS ===
+
+\begin{appendices}\label{annex}
+	\addcontentsline{toc}{section}{Annex}
+	\let\cleardoublepage\clearpage
+	%----------------------------------------------------------------------------------------------
+	\section*{Fragment de les dades utilitzades en el cas d'estudi de classificació de punts dins o fora d'un polígon}
+	\vspace{4mm}
+	\setlength{\fboxsep}{6pt}
+	\fbox{%
+		\begin{minipage}{0.9\textwidth}
+			\ttfamily\small
+			\begin{center}
+
+				\dadesfila{x}{y}{Sortida}\\
+				\dadesfila{-30.9116141891703}{8.79558686538047}{0}\\
+				\dadesfila{-22.6871582086727}{16.960336983424}{0}\\
+				\dadesfila{-36.117186870802}{10.7005623011012}{0}\\
+				\dadesfila{13.783697911846}{-2.43401305937799}{1}\\
+				\dadesfila{17.8866651922425}{-16.781459336902}{0}\\
+				\dadesfila{-26.6402896519861}{19.327862954666}{0}\\
+				\dadesfila{-14.4473865181167}{4.24388566365824}{1}\\
+				\dadesfila{-12.7816385991193}{-7.43544296297896}{0}\\
+				\dadesfila{-23.8186258163876}{-9.10794035671617}{1}\\
+				\dadesfila{14.2590345933908}{0.179591346196357}{1}\\
+				\dadesfila{4.91199006165121}{15.1703685105603}{0}\\
+				\dadesfila{3.35972808091601}{19.6092252564495}{0}\\
+				\dadesfila{32.9498296098965}{15.3256894569226}{0}\\
+				\dadesfila{-35.6122847973786}{1.93680113450231}{0}\\
+				\dadesfila{12.3352055882445}{0.916940975956525}{1}\\
+				\dadesfila{20.9131441052156}{1.15357713549287}{0}\\
+				\dadesfila{11.243922872073}{5.50363478325761}{1}\\
+				\dadesfila{36.8393361051685}{-9.73241719229264}{0}\\
+				\dadesfila{34.5820441703536}{0.963018265974878}{0}\\
+				\dadesfila{19.0567529180743}{-7.46936916943969}{0}\\
+				\dadesfila{-30.6435185863642}{-9.89582411379937}{0}\\
+				\dadesfila{-2.35077501121957}{-5.59190199293391}{1}
+			\end{center}
+		\end{minipage}
+	}
+	\vspace{-0.3cm}
+	\begin{center}
+		\small\textit{Fragment de les dades utilitzades en el cas d'estudi de classificació de punts dins o fora d'un polígon.}
+	\end{center}
+	%----------------------------------------------------------------------------------------------
+	\phantomsection
+	\section*{Taules d'hiperparàmetres dels models}
+	\label{annex:hiperparametres}
+
+	En aquest annex es recullen els principals hiperparàmetres utilitzats en els dos casos d'estudi desenvolupats al treball.
+
+	\begin{table}[H]
+		\centering
+		\small
+
+		\begin{tabular}{p{4.2cm} p{8.5cm}}
+			\hline
+			\textbf{Paràmetre} & \textbf{Valor utilitzat}                                                                                                                                            \\
+			\hline
+
+			Tipus de problema
+			                   & Classificació binària de punts dins o fora d'un polígon                                                                                                             \\
+
+			Dataset
+			                   & Punts generats de manera pseudoaleatòria mitjançant MATLAB                                                                                                          \\
+
+			Variables d'entrada
+			                   & Coordenades del punt, $(x,y)$                                                                                                                                       \\
+
+			Variable de sortida
+			                   & Classe binària: fora del polígon / dins del polígon                                                                                                                 \\
+
+			Partició de dades
+			                   & Entrenament: \textit{80 \%} -- Validació: \textit{10 \%} -- Test: \textit{10 \%}                                                                                    \\
+
+			Normalització de dades
+			                   & \textit{Normalització de la coordenada $x$ en l'interval [-40, 40] i de la coordenada $y$ en l'interval [-20, 20]}, transformant-les al rang $[0,1]$ mitjançant:
+			$x_{\text{norm}} = (x+40)/80$ i $y_{\text{norm}} = (y+20)/40$                                                                                                                            \\
+
+			Arquitectura ANN
+			                   & MLP                                                                                                                                                                 \\
+
+			Estructura de capes ANN
+			                   & Capa lineal $2 \rightarrow 6$, capa lineal $6 \rightarrow 1$                                                                                                        \\
+
+			Funcions d'activació ANN
+			                   & \textit{ReLU per capa oculta i per capa de sortida}                                                                                                                 \\
+
+			Funció de pèrdua
+			                   & \textit{MSELoss}                                                                                                                                                    \\
+
+			Optimitzador
+			                   & \textit{Adam}                                                                                                                                                       \\
+
+			Learning rate
+			                   & \textit{1e-3}                                                                                                                                                       \\
+
+			Weight decay
+			                   & $1 \cdot 10^{-5}$                                                                                                                                                   \\
+
+			Batch size
+			                   & \textit{5000 punts}                                                                                                                                                 \\
+
+			Nombre d'epochs
+			                   & \textit{466}                                                                                                                                                        \\
+
+			Criteri de parada
+			                   & \textit{Early Stopping} amb paciència de 20 epochs                                                                                                                  \\
+
+			Mètriques d'avaluació
+			                   & Accuracy i matriu de confusió                                                                                                                                       \\
+
+			Llindar de dispar ANN
+			                   & \textit{0,5}                                                                                                                                                        \\
+
+			Exactitud ANN
+			                   & 93,0\%                                                                                                                                                              \\
+
+			Mètode de conversió a SNN
+			                   & Conversió ANN-SNN mitjançant codificació per taxa i normalització de pesos                                                                                          \\
+
+			Tipus de codificació
+			                   & Rate encoding                                                                                                                                                       \\
+
+			Model de neurona SNN
+			                   & \textit{LIF}                                                                                                                                                        \\
+
+			Nombre de passos temporals
+			                   & \textit{200}                                                                                                                                                        \\
+
+			Decay / factor de fuita
+			                   & $0,9$                                                                                                                                                               \\
+
+			Llindar de dispar SNN
+			                   & \textit{0,59}                                                                                                                                                       \\
+
+			Llindar intern de neurona SNN
+			                   & $1,0$                                                                                                                                                               \\
+
+			Normalització de pesos
+			                   & Sí. Els pesos i biaixos de la primera capa es divideixen per l'activació màxima de la capa oculta, i els de la capa de sortida per l'activació màxima de la sortida \\
+
+			Sortida de la SNN
+			                   & Taxa de dispar acumulada durant la simulació temporal.                                                                                                              \\
+
+			Exactitud SNN
+			                   & 90,1\%                                                                                                                                                              \\
+
+			\hline
+		\end{tabular}
+
+		\caption*{\textit{Hiperparàmetres utilitzats en el cas d'estudi de classificació de punts dins o fora d'un polígon.}}
+		\label{tab:hiperparametres_poligon}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\small
+
+		\begin{tabular}{p{4.2cm} p{8.5cm}}
+			\hline
+			\textbf{Paràmetre} & \textbf{Valor utilitzat}                                                                                                                           \\
+			\hline
+
+			Tipus de problema
+			                   & Classificació multiclasse de dígits manuscrits                                                                                                     \\
+
+			Dataset
+			                   & MNIST                                                                                                                                              \\
+
+			Dimensions d'entrada
+			                   & Imatges en escala de grisos de $28 \times 28$ píxels                                                                                               \\
+
+			Nombre de classes
+			                   & 10 classes, corresponents als dígits del 0 al 9                                                                                                    \\
+
+			Partició de dades
+			                   & Entrenament: 80\% del conjunt d'entrenament de MNIST; validació: 20\% del conjunt d'entrenament de MNIST; test: conjunt de test oficial de MNIST   \\
+
+			Preprocessament
+			                   & Conversió de les imatges a tensor mitjançant \texttt{transforms.ToTensor()}, normalitzant els valors dels píxels a l'interval $[0,1]$              \\
+
+			Arquitectura CNN
+			                   &
+			Bloc convolucional 1: convolució $1 \rightarrow 32$ filtres, kernel $3 \times 3$, padding 1, \textit{max pooling} $2 \times 2$ i ReLU.
+			Bloc convolucional 2: convolució $32 \rightarrow 64$ filtres, kernel $3 \times 3$, padding 1, \textit{max pooling} $2 \times 2$ i ReLU.
+			Classificador: \textit{flatten}, capa totalment connectada de $64 \cdot 7 \cdot 7 = 3136$ entrades a 128 neurones, ReLU i capa final de 128 a 10 neurones               \\
+
+			Funcions d'activació CNN
+			                   & ReLU a les capes ocultes. La capa de sortida retorna logits, sobre els quals s'aplica \textit{softmax} durant la predicció                         \\
+
+			Funció de pèrdua
+			                   & CrossEntropyLoss                                                                                                                                   \\
+
+			Optimitzador
+			                   & Adam amb \textit{weight decay} de $10^{-5}$                                                                                                        \\
+
+			Learning rate
+			                   & $10^{-4}$                                                                                                                                          \\
+
+			Batch size
+			                   & 64                                                                                                                                                 \\
+
+			Nombre d'epochs
+			                   & 29                                                                                                                                                 \\
+
+			Criteri de parada
+			                   & \textit{Early Stopping} amb paciència de 20 epochs                                                                                                 \\
+
+			Mètriques d'avaluació
+			                   & Accuracy i matriu de confusió                                                                                                                      \\
+
+			Exactitud CNN
+			                   & 99,06\%                                                                                                                                            \\
+
+			Mètode de conversió a SNN
+			                   & Conversió CNN-SNN mitjançant codificació per taxa, normalització de pesos a partir del percentil de les activacions i simulació temporal de polsos \\
+
+			Tipus de codificació
+			                   & Rate encoding                                                                                                                                      \\
+
+			Calibratge de la SNN
+			                   & Càlcul del percentil 95,5 de les activacions positives de les capes \texttt{conv1}, \texttt{conv2}, \texttt{fc1} i \texttt{fc2}                    \\
+
+			Model de neurona SNN
+			                   & Leaky Integrate-and-Fire.                                                                                                                          \\
+
+			Nombre de passos temporals
+			                   & 200 passos temporals                                                                                                                               \\
+
+			Llindar de dispar
+			                   & 1,0                                                                                                                                                \\
+
+
+			Normalització de pesos
+			                   & Sí.                                                                                                                                                \\
+
+			Sortida de la SNN
+			                   & Taxa de dispar acumulada per cadascuna de les 10 classes                                                                                           \\
+
+			Exactitud SNN
+			                   & 93,19\%                                                                                                                                            \\
+
+			\hline
+		\end{tabular}
+
+		\caption*{\textit{Hiperparàmetres utilitzats en el cas d'estudi amb el dataset MNIST.}}
+		\label{tab:hiperparametres_mnist}
+	\end{table}
+	%----------------------------------------------------------------------------------------------
+	\vspace{5mm}
+	\section*{Logs d'entrenament de la ANN i la SNN per a la classificació de punts}
+	\vspace{3mm}
+	\begin{lstlisting}[style=logs, captionpos=b, label={lst:logs_ann}]
+		Comencant entrenament de la xarxa.
+		Neurones d'entrada: 2
+		Neurones de capes ocultes: 6
+		Capes ocultes: 1
+		Neurones de sortida: 1
+		Taxa d'aprenentatge: 0.001
+		Decaiment de pesos: 0.0001
+		Funcio de perdua: Mean Squared Error Loss
+		Optimitzador: Adam
+		poques: 200
+		Epoca 01   train loss: 0.5101   val loss: 0.5206
+		Epoca 02   train loss: 0.3836   val loss: 0.4914
+		Epoca 03   train loss: 0.4208   val loss: 0.4595
+		Epoca 04   train loss: 0.3790   val loss: 0.4213
+		Epoca 05   train loss: 0.4143   val loss: 0.3800
+		Epoca 06   train loss: 0.4146   val loss: 0.3512
+		Epoca 07   train loss: 0.3334   val loss: 0.3145
+		Epoca 08   train loss: 0.2923   val loss: 0.2925
+		...
+		Epoca 430   train loss: 0.1270   val loss: 0.1731
+		Epoca 431   train loss: 0.2137   val loss: 0.1724
+		Epoca 432   train loss: 0.2837   val loss: 0.1722
+		Early stopping activat.
+		Test Loss: 0.1643, Percentatje d'encert: 93.1000%
+	\end{lstlisting}
+	\vspace{-0.4cm}
+	\begin{center}
+		\small\textit{Fragment dels logs d'entrenament de la ANN}
+	\end{center}
+	%----------------------------------------------------------------------------------------------
+	\vspace{5mm}
+	\section*{Logs d'entrenament de la ANN i la SNN per a la classificació de dígits manuscrits}
+	\vspace{3mm}
+	\begin{lstlisting}[style=logs, captionpos=b, label={lst:logs_ann}]
+		Comencant entrenament de la xarxa CNN.
+		Dataset: MNIST
+		Filtres conv1: 32 | Filtres conv2: 64
+		Capa oculta FC: 128 neurones
+		Classes de sortida: 10
+		Taxa d'aprenentatge: 0.001
+		Decaiment de pesos: 1e-05
+		Funcio de perdua: CrossEntropyLoss
+		Optimitzador: Adam
+		Epoques: 20
+		Epoca 01 train loss: 0.1505 val loss: 0.0794 val acc: 97.35%
+		Epoca 02 train loss: 0.0274 val loss: 0.0504 val acc: 98.45%
+		Epoca 03 train loss: 0.0056 val loss: 0.0407 val acc: 98.74%
+		Epoca 04 train loss: 0.0605 val loss: 0.0429 val acc: 98.65%
+		Epoca 05 train loss: 0.0457 val loss: 0.0406 val acc: 98.77%
+		Epoca 06 train loss: 0.0054 val loss: 0.0372 val acc: 98.86%
+		...
+		Epoca 27 train loss: 0.0010 val loss: 0.0242 val acc: 99.45%
+		Epoca 28 train loss: 0.0000 val loss: 0.0252 val acc: 99.42%
+		Epoca 29 train loss: 0.0008 val loss: 0.0273 val acc: 99.46%
+		Early stopping activat.
+		Test Loss: 0.0422, Percentatge d'encert: 99.06%
+
+	\end{lstlisting}
+	\vspace{-0.4cm}
+	\begin{center}
+		\small\textit{Fragment dels logs d'entrenament de la CNN}
+	\end{center}
+
+	\vspace{3mm}
+	\begin{lstlisting}[style=logs, captionpos=b, label={lst:logs_ann}]
+
+		Percentil: 85.5% - conv1: 0.5635 | conv2: 1.8107 | fc1: 11.5843 | fc2: 25.2916
+		
+		CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+		SNN  ->  Encerts: 9318/10000   Accuracy: 93.18%  (200 passos)
+		SNN  ->  Casos amb 0 dispars a la classe predita: 423 (4.23%)
+		
+
+		Nou maxim SNN: 93.18% amb percentil 95.0 i 200 passos.
+
+		
+		CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+		SNN  ->  Encerts: 9319/10000   Accuracy: 93.19%  (200 passos)
+		SNN  ->  Casos amb 0 dispars a la classe predita: 463 (4.63%)
+		
+
+		Nou maxim SNN: 93.19% amb percentil 95.5 i 200 passos.
+
+		
+		CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+		SNN  ->  Encerts: 9303/10000   Accuracy: 93.03%  (200 passos)
+		SNN  ->  Casos amb 0 dispars a la classe predita: 513 (5.13%)
+		
+
+		
+		CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+		SNN  ->  Encerts: 9281/10000   Accuracy: 92.81%  (200 passos)
+		SNN  ->  Casos amb 0 dispars a la classe predita: 595 (5.95%)
+		
+
+		
+		CNN  ->  Encerts: 9906/10000   Accuracy: 99.06%
+		SNN  ->  Encerts: 9203/10000   Accuracy: 92.03%  (200 passos)
+		SNN  ->  Casos amb 0 dispars a la classe predita: 729 (7.29%)
+		
+		Percentil 90 activacions - conv1: 0.8717 | conv2: 2.6338 | fc1: 16.1574 | fc2: 30.4845
+		Percentil 90 activacions - conv1: 0.8659 | conv2: 2.6241 | fc1: 15.8791 | fc2: 29.3101
+		Percentil 90 activacions - conv1: 0.8737 | conv2: 2.6380 | fc1: 16.1887 | fc2: 30.3092
+		Percentil 90 activacions - conv1: 0.8732 | conv2: 2.6487 | fc1: 16.1750 | fc2: 29.8445
+		Percentil 95.5 activacions - conv1: 0.8692 | conv2: 2.6386 | fc1: 15.9389 | fc2: 30.1085
+	\end{lstlisting}
+	\vspace{-0.4cm}
+	\begin{center}
+		\small\textit{Fragment dels logs d'entrenament de la CNN}
+	\end{center}
+	%----------------------------------------------------------------------------------------------
+
+\end{appendices}
+\newpage
 
 
 \end{document}
